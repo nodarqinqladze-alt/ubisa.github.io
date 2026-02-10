@@ -1,192 +1,142 @@
-
 <!DOCTYPE html>
 <html lang="ka">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YouVideo უბისის ვიდეოები</title>
-
+<title>პოპულარული საიტები – კატეგორიებით</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-:root{
-  --bg:#0f0f0f;
-  --card:#181818;
-  --text:#ffffff;
-  --muted:#aaaaaa;
-  --accent:#ff0000;
+body{
+    font-family: Arial, sans-serif;
+    background:#f5f5f5;
+    margin:0;
+    padding:20px;
 }
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;}
-body{background:var(--bg);color:var(--text);} 
-
-header{height:56px;display:flex;align-items:center;padding:0 20px;border-bottom:1px solid #222;gap:20px;}
-header .logo{font-weight:600;display:flex;gap:6px;align-items:center;}
-header .logo span{background:var(--accent);padding:4px 6px;border-radius:4px;font-size:12px;}
-header input{margin-left:auto;width:40%;max-width:500px;padding:8px 14px;border-radius:20px;border:1px solid #333;background:#121212;color:#fff;}
-
-.container{display:grid;grid-template-columns:220px 1fr;}
-aside{border-right:1px solid #222;padding:15px;}
-aside a{display:block;color:#fff;text-decoration:none;padding:10px;border-radius:8px;font-size:14px;}
-aside a:hover{background:#222;}
-main{padding:20px;}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;}
-.card{cursor:pointer;}
-.thumb{position:relative;}
-.thumb img{width:100%;border-radius:12px;}
-.time{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.8);padding:2px 6px;font-size:12px;border-radius:4px;}
-.info{display:flex;gap:10px;margin-top:10px;}
-.avatar{width:36px;height:36px;border-radius:50%;background:#444;}
-.title{font-size:15px;line-height:1.3;}
-.meta{font-size:13px;color:var(--muted);margin-top:4px;}
-
-/* PLAYER MODAL */
-.player{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:999;}
-.player.active{display:flex;}
-.player-box{width:90%;max-width:900px;aspect-ratio:16/9;background:#000;position:relative;border-radius:12px;overflow:hidden;}
-.player iframe{width:100%;height:100%;}
-.close{position:absolute;top:10px;right:10px;background:#000;color:#fff;border:none;font-size:18px;width:36px;height:36px;border-radius:50%;cursor:pointer;}
-
-@media(max-width:900px){.container{grid-template-columns:1fr;}aside{display:none;}header input{width:60%;}}
+h1{
+    text-align:center;
+}
+.category{
+    background:#fff;
+    margin-bottom:20px;
+    padding:15px;
+    border-radius:10px;
+}
+.category h2{
+    margin:0 0 10px 0;
+    border-bottom:2px solid #ddd;
+    padding-bottom:5px;
+}
+.links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+}
+.links a{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    text-decoration:none;
+    background:#f0f0f0;
+    padding:8px 12px;
+    border-radius:8px;
+    color:#000;
+    font-size:14px;
+}
+.links a:hover{
+    background:#e0e0e0;
+}
+.links img{
+    width:16px;
+    height:16px;
+}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">▶ <strong>უბისა</strong><span>GE</span></div>
-  <input type="text" placeholder="ძიება">
-</header>
+<h1>🌐 პოპულარული საიტები კატეგორიებით</h1>
 
-<div class="container">
-  <aside>
-    <a href="index.html">მთავარი</a>
-    <a href="/ambebi.html">სიახლეები</a>
-    <a href="/gallery.html">გალერეა</a>
-    <a href="/amindi.html">ამინდი</a>
-    <a href="tv.html">ტელევიზია</a>
-    <a href="time.html">მსოფლიო დრო</a>
-    <a href="contact.html">კონტაქტი</a>
-
-
-
-  </aside>
-
-  <main>
-    <div class="grid">
-
-      <!-- ვიდეოს დასამატებლად დააკოპირე ეს CARD ბლოკი -->
-<div class="card" onclick="openVideo('https://www.youtube.com/embed/iyjkz-v609w?si=bTWYWJOFpJKavDgG')">
-        <div class="thumb">
-          <img src="https://i.postimg.cc/SNPHQNFg/eezzzzz.jpg">
-          <div class="time">0:47</div>
-        </div>
-        <div class="info">
-          <div class="avatar"></div>
-          <div>
-            <div class="title">უბისა / Ubisa</div>
-            <div class="meta">19 417 ნახვა</div>
-          </div>
-        </div>
-      </div>
-
-
-<div class="card" onclick="openVideo('https://www.youtube.com/embed/OfOrqdDjHSg?si=Ius91XE-dWjSHA8k')">
-        <div class="thumb">
-          <img src="https://i.postimg.cc/T2p9djRs/eeeeeaaaaaa.jpg">
-          <div class="time">4:37</div>
-        </div>
-        <div class="info">
-          <div class="avatar"></div>
-          <div>
-            <div class="title">2012 წელი,უბისა</div>
-            <div class="meta">9417 ნახვა</div>
-          </div>
-        </div>
-      </div>
-
-
-<div class="card" onclick="openVideo('https://www.youtube.com/embed/-P8vopdu9ys?si=x1asTN_9J_1R6U9C')">
-        <div class="thumb">
-          <img src="https://i.postimg.cc/mDVCQP8p/ssssss.jpg">
-          <div class="time">0:54</div>
-        </div>
-        <div class="info">
-          <div class="avatar"></div>
-          <div>
-            <div class="title">მონასტრის რესტავრაცია</div>
-            <div class="meta">11 247 ნახვა</div>
-          </div>
-        </div>
-      </div>
-
-<div class="card" onclick="openVideo('https://www.youtube.com/embed/mfDgXCtfzjY?si=Uavcah2ge0YWuPfb')">
-        <div class="thumb">
-          <img src="https://i.postimg.cc/mhfqCpdK/ssasa.jpg">
-          <div class="time">0:14</div>
-        </div>
-        <div class="info">
-          <div class="avatar"></div>
-          <div>
-            <div class="title">უბისის მონასტერი</div>
-            <div class="meta">14 754 ნახვა</div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="card" onclick="openVideo('https://www.youtube.com/embed/_FVLXBFvKow?si=4QKdeD7mz3Hcuo0O')">
-        <div class="thumb">
-          <img src="https://i.postimg.cc/W48c6SVW/viddddd.png">
-          <div class="time">3:48</div>
-        </div>
-        <div class="info">
-          <div class="avatar"></div>
-          <div>
-            <div class="title"> წმ.გიროგის მონასტერი</div>
-            <div class="meta"> 2754 ნახვა</div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="card" onclick="openVideo('https://www.youtube.com/embed/aqTP0OQb5D8?si=bPs_V-2H6ZEsYEGi')">
-        <div class="thumb">
-          <img src="https://i.postimg.cc/GhmKHQgL/koshkaaa.jpg">
-          <div class="time">1:37</div>
-        </div>
-        <div class="info">
-          <div class="avatar"></div>
-          <div>
-            <div class="title">მე მიყვარს უბისა</div>
-            <div class="meta"> 8741 ნახვა</div>
-          </div>
-        </div>
-      </div>
-
-     
-
-
-
-<!-- VIDEO PLAYER -->
-<div class="player" id="player" onclick="closeVideo()">
-  <div class="player-box" onclick="event.stopPropagation()">
-    <button class="close" onclick="closeVideo()">✕</button>
-    <iframe id="videoFrame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-  </div>
+<div class="category">
+<h2>📱 სოციალური ქსელები</h2>
+<div class="links">
+<a href="https://facebook.com"><img src="https://facebook.com/favicon.ico">Facebook</a>
+<a href="https://instagram.com"><img src="https://instagram.com/favicon.ico">Instagram</a>
+<a href="https://tiktok.com"><img src="https://tiktok.com/favicon.ico">TikTok</a>
+<a href="https://twitter.com"><img src="https://twitter.com/favicon.ico">X (Twitter)</a>
+<a href="https://linkedin.com"><img src="https://linkedin.com/favicon.ico">LinkedIn</a>
+</div>
 </div>
 
-<script>
-function openVideo(url){
-  const player=document.getElementById('player');
-  const frame=document.getElementById('videoFrame');
-  frame.src=url+"?autoplay=1";
-  player.classList.add('active');
-}
-function closeVideo(){
-  const player=document.getElementById('player');
-  const frame=document.getElementById('videoFrame');
-  frame.src='';
-  player.classList.remove('active');
-}
-</script>
+<div class="category">
+<h2>🎬 ფილმები</h2>
+<div class="links">
+<a href="https://adjaranet.com"><img src="https://adjaranet.com/favicon.ico">AdjaraNet</a>
+<a href="https://netflix.com"><img src="https://netflix.com/favicon.ico">Netflix</a>
+<a href="https://imovies.cc"><img src="https://imovies.cc/favicon.ico">iMovies</a>
+<a href="https://kinogo.biz"><img src="https://kinogo.biz/favicon.ico">Kinogo</a>
+</div>
+</div>
+
+<div class="category">
+<h2>🎵 მუსიკა</h2>
+<div class="links">
+<a href="https://spotify.com"><img src="https://spotify.com/favicon.ico">Spotify</a>
+<a href="https://music.youtube.com"><img src="https://youtube.com/favicon.ico">YouTube Music</a>
+<a href="https://soundcloud.com"><img src="https://soundcloud.com/favicon.ico">SoundCloud</a>
+</div>
+</div>
+
+<div class="category">
+<h2>💼 დასაქმება</h2>
+<div class="links">
+<a href="https://jobs.ge"><img src="https://jobs.ge/favicon.ico">Jobs.ge</a>
+<a href="https://hr.ge"><img src="https://hr.ge/favicon.ico">HR.ge</a>
+<a href="https://linkedin.com/jobs"><img src="https://linkedin.com/favicon.ico">LinkedIn Jobs</a>
+</div>
+</div>
+
+<div class="category">
+<h2>📰 პრესა</h2>
+<div class="links">
+<a href="https://ambebi.ge"><img src="https://ambebi.ge/favicon.ico">Ambebi.ge</a>
+<a href="https://on.ge"><img src="https://on.ge/favicon.ico">On.ge</a>
+<a href="https://civil.ge"><img src="https://civil.ge/favicon.ico">Civil.ge</a>
+</div>
+</div>
+
+<div class="category">
+<h2>🛒 მაღაზიები</h2>
+<div class="links">
+<a href="https://myshop.ge"><img src="https://myshop.ge/favicon.ico">MyShop</a>
+<a href="https://amazon.com"><img src="https://amazon.com/favicon.ico">Amazon</a>
+<a href="https://aliexpress.com"><img src="https://aliexpress.com/favicon.ico">AliExpress</a>
+</div>
+</div>
+
+<div class="category">
+<h2>📚 განათლება</h2>
+<div class="links">
+<a href="https://freeuni.edu.ge"><img src="https://freeuni.edu.ge/favicon.ico">FreeUni</a>
+<a href="https://coursera.org"><img src="https://coursera.org/favicon.ico">Coursera</a>
+<a href="https://khanacademy.org"><img src="https://khanacademy.org/favicon.ico">Khan Academy</a>
+</div>
+</div>
+
+<div class="category">
+<h2>🚗 ავტომობილი</h2>
+<div class="links">
+<a href="https://myauto.ge"><img src="https://myauto.ge/favicon.ico">MyAuto</a>
+<a href="https://autopapa.ge"><img src="https://autopapa.ge/favicon.ico">AutoPapa</a>
+<a href="https://cars.com"><img src="https://cars.com/favicon.ico">Cars.com</a>
+</div>
+</div>
+
+<div class="category">
+<h2>💰 ფინანსები</h2>
+<div class="links">
+<a href="https://nbg.gov.ge"><img src="https://nbg.gov.ge/favicon.ico">ეროვნული ბანკი</a>
+<a href="https://tbcbank.ge"><img src="https://tbcbank.ge/favicon.ico">TBC Bank</a>
+<a href="https://bog.ge"><img src="https://bog.ge/favicon.ico">Bank of Georgia</a>
+</div>
+</div>
 
 </body>
 </html>
