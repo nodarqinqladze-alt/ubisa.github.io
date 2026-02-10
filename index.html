@@ -4,129 +4,176 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ჩემი სტარტ გვერდი</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background-image: url('https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=1600&q=80'); /* ფონის სურათი */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a url('https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
             background-attachment: fixed;
-            color: white;
+            background-blend-mode: overlay;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.5); /* მუქი გამჭვირვალე ფონი კონტენტისთვის */
-            min-height: 100vh;
+            padding: 40px 20px;
         }
 
-        /* ზედა კატეგორიების სექცია */
-        .top-nav {
+        /* კატეგორიების ნავიგაცია */
+        .categories-bar {
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-        }
-
-        .category-btn {
-            background: #fff;
-            color: #333;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .category-btn:hover {
-            background: #e0e0e0;
-        }
-
-        /* სექციების სათაურები */
-        .section-title {
-            font-size: 24px;
-            margin: 20px 0 10px 0;
-            border-left: 5px solid #ff4b2b;
-            padding-left: 10px;
-        }
-
-        /* საიტების ბადე (Grid) */
-        .site-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
             margin-bottom: 40px;
+            justify-content: center;
+        }
+
+        .cat-item {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cat-item:hover {
+            background: #ff4b2b;
+            transform: translateY(-2px);
+        }
+
+        /* სექციის სათაური */
+        .section-header {
+            color: white;
+            font-size: 20px;
+            margin: 30px 0 15px 5px;
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-header i {
+            margin-right: 10px;
+            color: #ff4b2b;
+        }
+
+        /* საიტების ბადე */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
         }
 
         .site-card {
             background: white;
-            height: 100px;
+            padding: 20px;
+            border-radius: 8px;
+            text-decoration: none;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-radius: 4px;
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-            font-size: 18px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            transition: transform 0.2s;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .site-card:hover {
-            transform: scale(1.05);
-            background: #f9f9f9;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
         }
 
-        .site-card img {
-            max-width: 80%;
-            max-height: 60%;
-            object-fit: contain;
+        .site-card i {
+            font-size: 32px;
         }
+
+        .site-card span {
+            color: #333;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        /* ფერები იკონებისთვის */
+        .fa-facebook { color: #1877F2; }
+        .fa-youtube { color: #FF0000; }
+        .fa-instagram { color: #E4405F; }
+        .fa-twitter { color: #1DA1F2; }
+        .fa-google { color: #4285F4; }
+        .fa-amazon { color: #FF9900; }
+        .fa-paypal { color: #003087; }
+        .fa-film { color: #ff4b2b; }
+        .fa-globe { color: #555; }
     </style>
 </head>
 <body>
 
 <div class="container">
     
-    <div class="top-nav">
-        <button class="category-btn">მთავარი</button>
-        <button class="category-btn">სიახლეები</button>
-        <button class="category-btn">თამაშები</button>
-        <button class="category-btn">სხვა</button>
+    <div class="categories-bar">
+        <a href="#" class="cat-item">ფილმები</a>
+        <a href="#" class="cat-item">სოც. ქსელები</a>
+        <a href="#" class="cat-item">ბანკები</a>
+        <a href="#" class="cat-item">სიახლეები</a>
+        <a href="#" class="cat-item">თამაშები</a>
     </div>
 
-    <div class="section-title">ფილმები</div>
-    <div class="site-grid">
-        <a href="https://adjaranet.com" target="_blank" class="site-card">Adjaranet</a>
-        <a href="https://imovies.cc" target="_blank" class="site-card">iMovies</a>
-        <a href="https://cavea.ge" target="_blank" class="site-card">Cavea</a>
-        <a href="#" class="site-card">Movie 4</a>
-        <a href="#" class="site-card">Movie 5</a>
+    <div class="section-header"><i class="fas fa-film"></i> ფილმები</div>
+    <div class="grid">
+        <a href="https://adjaranet.com" target="_blank" class="site-card">
+            <i class="fas fa-play-circle" style="color: #e50914;"></i>
+            <span>Adjaranet</span>
+        </a>
+        <a href="https://imovies.cc" target="_blank" class="site-card">
+            <i class="fas fa-compact-disc" style="color: #00d2ff;"></i>
+            <span>iMovies</span>
+        </a>
+        <a href="#" class="site-card">
+            <i class="fas fa-video"></i>
+            <span>Cavea</span>
+        </a>
     </div>
 
-    <div class="section-title">სოციალური ქსელები</div>
-    <div class="site-grid">
-        <a href="https://facebook.com" target="_blank" class="site-card" style="color: #1877F2;">Facebook</a>
-        <a href="https://youtube.com" target="_blank" class="site-card" style="color: #FF0000;">YouTube</a>
-        <a href="https://twitter.com" target="_blank" class="site-card" style="color: #1DA1F2;">Twitter</a>
-        <a href="https://instagram.com" target="_blank" class="site-card">Instagram</a>
-        <a href="https://vk.com" target="_blank" class="site-card" style="color: #4C75A3;">VK.com</a>
+    <div class="section-header"><i class="fas fa-share-alt"></i> სოციალური ქსელები</div>
+    <div class="grid">
+        <a href="https://facebook.com" target="_blank" class="site-card">
+            <i class="fab fa-facebook"></i>
+            <span>Facebook</span>
+        </a>
+        <a href="https://youtube.com" target="_blank" class="site-card">
+            <i class="fab fa-youtube"></i>
+            <span>YouTube</span>
+        </a>
+        <a href="https://instagram.com" target="_blank" class="site-card">
+            <i class="fab fa-instagram"></i>
+            <span>Instagram</span>
+        </a>
+        <a href="https://google.com" target="_blank" class="site-card">
+            <i class="fab fa-google"></i>
+            <span>Google</span>
+        </a>
     </div>
 
-    <div class="section-title">შოპინგი და ბანკები</div>
-    <div class="site-grid">
-        <a href="https://amazon.com" target="_blank" class="site-card">Amazon</a>
-        <a href="https://ebay.com" target="_blank" class="site-card">eBay</a>
-        <a href="https://tbcbank.ge" target="_blank" class="site-card">TBC Bank</a>
-        <a href="https://bog.ge" target="_blank" class="site-card">BOG</a>
+    <div class="section-header"><i class="fas fa-shopping-cart"></i> შოპინგი</div>
+    <div class="grid">
+        <a href="https://amazon.com" target="_blank" class="site-card">
+            <i class="fab fa-amazon"></i>
+            <span>Amazon</span>
+        </a>
+        <a href="https://ebay.com" target="_blank" class="site-card">
+            <i class="fab fa-ebay" style="color: #e53238;"></i>
+            <span>eBay</span>
+        </a>
+        <a href="https://paypal.com" target="_blank" class="site-card">
+            <i class="fab fa-paypal"></i>
+            <span>PayPal</span>
+        </a>
     </div>
 
 </div>
