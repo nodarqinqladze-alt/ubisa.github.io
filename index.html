@@ -1,169 +1,135 @@
 <!DOCTYPE html>
 <html lang="ka">
 <head>
-<meta charset="UTF-8">
-<title>პოპულარული საიტები – ფავორიტებით</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ჩემი სტარტ გვერდი</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=1600&q=80'); /* ფონის სურათი */
+            background-size: cover;
+            background-attachment: fixed;
+            color: white;
+        }
 
-<style>
-:root{
-    --glass: rgba(255,255,255,0.15);
-    --border: rgba(255,255,255,0.25);
-    --text: #ffffff;
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5); /* მუქი გამჭვირვალე ფონი კონტენტისთვის */
+            min-height: 100vh;
+        }
 
-*{box-sizing:border-box}
+        /* ზედა კატეგორიების სექცია */
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
 
-body{
-    margin:0;
-    padding:30px;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg,#667eea,#764ba2);
-    color:var(--text);
-}
+        .category-btn {
+            background: #fff;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
 
-h1{
-    text-align:center;
-    margin-bottom:40px;
-}
+        .category-btn:hover {
+            background: #e0e0e0;
+        }
 
-.category{
-    backdrop-filter: blur(12px);
-    background: var(--glass);
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:18px;
-    margin-bottom:22px;
-}
+        /* სექციების სათაურები */
+        .section-title {
+            font-size: 24px;
+            margin: 20px 0 10px 0;
+            border-left: 5px solid #ff4b2b;
+            padding-left: 10px;
+        }
 
-.category h2{
-    margin:0 0 14px;
-    font-size:20px;
-}
+        /* საიტების ბადე (Grid) */
+        .site-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
 
-.links{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-}
+        .site-card {
+            background: white;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
 
-.site{
-    position:relative;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding:10px 14px;
-    background: rgba(255,255,255,0.2);
-    border-radius:14px;
-    color:#fff;
-    text-decoration:none;
-    transition:0.25s;
-}
+        .site-card:hover {
+            transform: scale(1.05);
+            background: #f9f9f9;
+        }
 
-.site:hover{
-    transform: translateY(-3px);
-    background: rgba(255,255,255,0.35);
-}
-
-.site img{
-    width:18px;
-    height:18px;
-}
-
-.star{
-    position:absolute;
-    top:6px;
-    right:8px;
-    font-size:16px;
-    cursor:pointer;
-    opacity:0.7;
-}
-
-.star.active{
-    color:gold;
-    opacity:1;
-}
-</style>
+        .site-card img {
+            max-width: 80%;
+            max-height: 60%;
+            object-fit: contain;
+        }
+    </style>
 </head>
 <body>
 
-<h1>🌐 პოპულარული საიტები ერთ ადგილზე</h1>
+<div class="container">
+    
+    <div class="top-nav">
+        <button class="category-btn">მთავარი</button>
+        <button class="category-btn">სიახლეები</button>
+        <button class="category-btn">თამაშები</button>
+        <button class="category-btn">სხვა</button>
+    </div>
 
-<!-- სოციალური ქსელები -->
-<div class="category">
-<h2>📱 სოციალური ქსელები</h2>
-<div class="links">
-<a class="site" href="https://facebook.com" data-id="facebook">
-<img src="https://facebook.com/favicon.ico">Facebook
-<span class="star">⭐</span>
-</a>
-<a class="site" href="https://instagram.com" data-id="instagram">
-<img src="https://instagram.com/favicon.ico">Instagram
-<span class="star">⭐</span>
-</a>
-<a class="site" href="https://tiktok.com" data-id="tiktok">
-<img src="https://tiktok.com/favicon.ico">TikTok
-<span class="star">⭐</span>
-</a>
+    <div class="section-title">ფილმები</div>
+    <div class="site-grid">
+        <a href="https://adjaranet.com" target="_blank" class="site-card">Adjaranet</a>
+        <a href="https://imovies.cc" target="_blank" class="site-card">iMovies</a>
+        <a href="https://cavea.ge" target="_blank" class="site-card">Cavea</a>
+        <a href="#" class="site-card">Movie 4</a>
+        <a href="#" class="site-card">Movie 5</a>
+    </div>
+
+    <div class="section-title">სოციალური ქსელები</div>
+    <div class="site-grid">
+        <a href="https://facebook.com" target="_blank" class="site-card" style="color: #1877F2;">Facebook</a>
+        <a href="https://youtube.com" target="_blank" class="site-card" style="color: #FF0000;">YouTube</a>
+        <a href="https://twitter.com" target="_blank" class="site-card" style="color: #1DA1F2;">Twitter</a>
+        <a href="https://instagram.com" target="_blank" class="site-card">Instagram</a>
+        <a href="https://vk.com" target="_blank" class="site-card" style="color: #4C75A3;">VK.com</a>
+    </div>
+
+    <div class="section-title">შოპინგი და ბანკები</div>
+    <div class="site-grid">
+        <a href="https://amazon.com" target="_blank" class="site-card">Amazon</a>
+        <a href="https://ebay.com" target="_blank" class="site-card">eBay</a>
+        <a href="https://tbcbank.ge" target="_blank" class="site-card">TBC Bank</a>
+        <a href="https://bog.ge" target="_blank" class="site-card">BOG</a>
+    </div>
+
 </div>
-</div>
-
-<!-- ფილმები -->
-<div class="category">
-<h2>🎬 ფილმები</h2>
-<div class="links">
-<a class="site" href="https://adjaranet.com" data-id="adjaranet">
-<img src="https://adjaranet.com/favicon.ico">AdjaraNet
-<span class="star">⭐</span>
-</a>
-<a class="site" href="https://netflix.com" data-id="netflix">
-<img src="https://netflix.com/favicon.ico">Netflix
-<span class="star">⭐</span>
-</a>
-</div>
-</div>
-
-<!-- მუსიკა -->
-<div class="category">
-<h2>🎵 მუსიკა</h2>
-<div class="links">
-<a class="site" href="https://spotify.com" data-id="spotify">
-<img src="https://spotify.com/favicon.ico">Spotify
-<span class="star">⭐</span>
-</a>
-<a class="site" href="https://soundcloud.com" data-id="soundcloud">
-<img src="https://soundcloud.com/favicon.ico">SoundCloud
-<span class="star">⭐</span>
-</a>
-</div>
-</div>
-
-<script>
-const stars = document.querySelectorAll(".star");
-let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-
-stars.forEach(star=>{
-    const site = star.parentElement;
-    const id = site.dataset.id;
-
-    if(favorites.includes(id)){
-        star.classList.add("active");
-    }
-
-    star.addEventListener("click", e=>{
-        e.preventDefault();
-        star.classList.toggle("active");
-
-        if(star.classList.contains("active")){
-            favorites.push(id);
-        }else{
-            favorites = favorites.filter(f=>f!==id);
-        }
-
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-    });
-});
-</script>
 
 </body>
 </html>
