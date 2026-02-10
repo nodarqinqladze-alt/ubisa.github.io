@@ -1,96 +1,66 @@
 <!DOCTYPE html>
 <html lang="ka">
 <head>
-<meta charset="UTF-8">
-<title>სიახლეები</title>
-<style>
-body { font-family: Arial; background:#f4f4f4; padding:20px; }
-.news { background:#fff; padding:15px; margin-bottom:15px; border-radius:5px; }
-form { background:#fff; padding:15px; margin-bottom:20px; border-radius:5px; }
-input, textarea, button { width:100%; margin-top:10px; padding:8px; }
-button { background:#007bff; color:#fff; border:none; cursor:pointer; }
-small { color:#777; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>მნიშვნელოვანი ფაქტები</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        #fact {
+            font-size: 24px;
+            font-weight: bold;
+            color: #16a085;
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
+    <h1>დღის საინტერესო ფაქტი</h1>
+    <div id="fact"></div>
+    <button class="button" onclick="getFact()">ახალი ფაქტი</button>
 
-<h1>ახალი ამბები</h1>
+    <script>
+        const facts = [
+            "დედამიწაზე 8 მილიონზე მეტი სახეობა არსებობს.",
+            "ყოველ წელს, მსოფლიოში, დაახლოებით 8 მილიონი ტონა პლასტიკური ნარჩენი ხვდება ოკეანეში.",
+            "პირველი კომპიუტერი, რომელიც პროგრამირებადი იყო, დამზადდა 1940-იან წლებში.",
+            "ყველაზე სწრაფი სახე მსოფლიოში ჰოკის მტრედი (Falco peregrinus), რომელიც საათში 240 მილის სიჩქარით დაფრინავს.",
+            "ადამიანის ტვინი 100 ბილიონზე მეტი ნეირონისგან შედგება."
+        ];
 
-<!-- ხელით დამატება -->
-<form onsubmit="addManualNews(event)">
-  <h3>სიახლის დამატება</h3>
-  <input id="title" placeholder="სათაური" required>
-  <textarea id="content" placeholder="ტექსტი" required></textarea>
-  <button>დამატება</button>
-</form>
+        function getFact() {
+            const today = new Date();
+            const dayOfYear = today.getDate();
+            const factIndex = dayOfYear % facts.length;
+            document.getElementById('fact').innerHTML = facts[factIndex];
+        }
 
-<div id="news"></div>
-
-<script>
-const newsBox = document.getElementById("news");
-let manualNews = JSON.parse(localStorage.getItem("manualNews")) || [];
-
-/* --- ხელით დამატება --- */
-function addManualNews(e) {
-  e.preventDefault();
-  manualNews.unshift({
-    title: title.value,
-    description: content.value,
-    source: "ავტორის სიახლე",
-    date: new Date().toLocaleString("ka-GE")
-  });
-  localStorage.setItem("manualNews", JSON.stringify(manualNews));
-  render();
-  title.value = content.value = "";
-}
-
-/* --- ავტომატური RSS --- */
-const feeds = [
-  "https://www.ambebi.ge/rss.xml",
-  "https://www.interpressnews.ge/rss"
-];
-
-async function loadRSS() {
-  let rssNews = [];
-  for (let feed of feeds) {
-    const res = await fetch(
-      "https://api.rss2json.com/v1/api.json?rss_url=" + feed
-    );
-    const data = await res.json();
-    data.items.slice(0,5).forEach(item => {
-      rssNews.push({
-        title: item.title,
-        description: item.description,
-        source: data.feed.title,
-        date: item.pubDate,
-        link: item.link
-      });
-    });
-  }
-  return rssNews;
-}
-
-/* --- გამოჩენა --- */
-async function render() {
-  newsBox.innerHTML = "";
-  const rssNews = await loadRSS();
-  const allNews = [...manualNews, ...rssNews];
-
-  allNews.forEach(n => {
-    newsBox.innerHTML += `
-      <div class="news">
-        <h3>${n.title}</h3>
-        <small>${n.source} | ${n.date}</small>
-        <p>${n.description}</p>
-        ${n.link ? `<a href="${n.link}" target="_blank">სრული ამბავი</a>` : ""}
-      </div>
-    `;
-  });
-}
-
-render();
-</script>
-
+        // Initial fact when page loads
+        getFact();
+    </script>
 </body>
 </html>
-
