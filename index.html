@@ -14,6 +14,7 @@
             background-size: cover;
             background-attachment: fixed;
             background-blend-mode: overlay;
+            color: white;
         }
 
         .container {
@@ -22,7 +23,6 @@
             padding: 40px 20px;
         }
 
-        /* კატეგორიების ნავიგაცია */
         .categories-bar {
             display: flex;
             flex-wrap: wrap;
@@ -48,7 +48,6 @@
             transform: translateY(-2px);
         }
 
-        /* სექციის სათაური */
         .section-header {
             color: white;
             font-size: 20px;
@@ -64,7 +63,6 @@
             color: #ff4b2b;
         }
 
-        /* საიტების ბადე */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -83,6 +81,7 @@
             gap: 10px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            color: #333;
         }
 
         .site-card:hover {
@@ -90,32 +89,22 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.5);
         }
 
-        .site-card i {
+        .site-card i, .site-card img {
             font-size: 32px;
+            width: 32px;
+            height: 32px;
         }
 
         .site-card span {
-            color: #333;
             font-weight: 600;
             font-size: 15px;
+            text-align: center;
         }
-
-        /* ფერები იკონებისთვის */
-        .fa-facebook { color: #1877F2; }
-        .fa-youtube { color: #FF0000; }
-        .fa-instagram { color: #E4405F; }
-        .fa-twitter { color: #1DA1F2; }
-        .fa-google { color: #4285F4; }
-        .fa-amazon { color: #FF9900; }
-        .fa-paypal { color: #003087; }
-        .fa-film { color: #ff4b2b; }
-        .fa-globe { color: #555; }
     </style>
 </head>
 <body>
-
 <div class="container">
-    
+
     <div class="categories-bar">
         <a href="/index.html" class="cat-item">მთავარი</a>
         <a href="/ambebi.html" class="cat-item">სიახლეები</a>
@@ -125,181 +114,120 @@
         <a href="/video.html" class="cat-item">ვიდეო პორტალი</a>
     </div>
 
-    <!-- სოციალური ქსელები -->
-<div class="category">
-<h2>📱 სოციალური ქსელები</h2>
-<div class="links">
-<a class="site" href="https://facebook.com"><img src="https://facebook.com/favicon.ico">Facebook</a>
-<a class="site" href="https://instagram.com"><img src="https://instagram.com/favicon.ico">Instagram</a>
-<a class="site" href="https://tiktok.com"><img src="https://tiktok.com/favicon.ico">TikTok</a>
-<a class="site" href="https://twitter.com"><img src="https://twitter.com/favicon.ico">X (Twitter)</a>
-<a class="site" href="https://linkedin.com"><img src="https://linkedin.com/favicon.ico">LinkedIn</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-share-alt"></i> სოციალური ქსელები</div>
+    <div class="grid">
+        <a href="https://facebook.com" class="site-card"><i class="fab fa-facebook"></i><span>Facebook</span></a>
+        <a href="https://instagram.com" class="site-card"><i class="fab fa-instagram"></i><span>Instagram</span></a>
+        <a href="https://tiktok.com" class="site-card"><i class="fab fa-tiktok"></i><span>TikTok</span></a>
+        <a href="https://twitter.com" class="site-card"><i class="fab fa-twitter"></i><span>X (Twitter)</span></a>
+        <a href="https://linkedin.com" class="site-card"><i class="fab fa-linkedin"></i><span>LinkedIn</span></a>
+    </div>
 
-<!-- ფილმები -->
-<div class="category">
-<h2>🎬 ფილმები</h2>
-<div class="links">
-<a class="site" href="https://adjaranet.com"><img src="https://adjaranet.com/favicon.ico">AdjaraNet</a>
-<a class="site" href="https://imovies.cc"><img src="https://imovies.cc/favicon.ico">iMovies</a>
-<a class="site" href="https://netflix.com"><img src="https://netflix.com/favicon.ico">Netflix</a>
-<a class="site" href="https://kinogo.biz"><img src="https://kinogo.biz/favicon.ico">Kinogo</a>
-<a class="site" href="https://kinoworld.net/"><img src="https://kinoworld.net/favicon.ico">KinoWorld.Net</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-film"></i> ფილმები</div>
+    <div class="grid">
+        <a href="https://adjaranet.com" class="site-card"><i class="fas fa-film" style="color:#e50914;"></i><span>AdjaraNet</span></a>
+        <a href="https://imovies.cc" class="site-card"><i class="fas fa-video"></i><span>iMovies</span></a>
+        <a href="https://netflix.com" class="site-card"><i class="fas fa-film" style="color:red;"></i><span>Netflix</span></a>
+        <a href="https://kinogo.biz" class="site-card"><i class="fas fa-video"></i><span>Kinogo</span></a>
+        <a href="https://kinoworld.net/" class="site-card"><img src="https://kinoworld.net/templates/abc-world-3/img/logo-1.svg" alt=""><span>KinoWorld.Net</span></a>
+    </div>
 
-<!-- მუსიკა -->
-<div class="category">
-<h2>🎵 მუსიკა</h2>
-<div class="links">
-<a class="site" href="https://spotify.com"><img src="https://spotify.com/favicon.ico">Spotify</a>
-<a class="site" href="https://soundcloud.com"><img src="https://soundcloud.com/favicon.ico">SoundCloud</a>
-<a class="site" href="https://music.youtube.com"><img src="https://youtube.com/favicon.ico">YouTube Music</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-music"></i> მუსიკა</div>
+    <div class="grid">
+        <a href="https://spotify.com" class="site-card"><i class="fab fa-spotify"></i><span>Spotify</span></a>
+        <a href="https://soundcloud.com" class="site-card"><i class="fab fa-soundcloud"></i><span>SoundCloud</span></a>
+        <a href="https://music.youtube.com" class="site-card"><i class="fab fa-youtube"></i><span>YouTube Music</span></a>
+    </div>
 
-<!-- დასაქმება -->
-<div class="category">
-<h2>💼 დასაქმება</h2>
-<div class="links">
-<a class="site" href="https://jobs.ge"><img src="https://jobs.ge/favicon.ico">Jobs.ge</a>
-<a class="site" href="https://hr.ge"><img src="https://hr.ge/favicon.ico">HR.ge</a>
-<a class="site" href="https://linkedin.com/jobs"><img src="https://linkedin.com/favicon.ico">LinkedIn Jobs</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-briefcase"></i> დასაქმება</div>
+    <div class="grid">
+        <a href="https://jobs.ge" class="site-card"><i class="fas fa-briefcase"></i><span>Jobs.ge</span></a>
+        <a href="https://hr.ge" class="site-card"><i class="fas fa-briefcase"></i><span>HR.ge</span></a>
+        <a href="https://linkedin.com/jobs" class="site-card"><i class="fab fa-linkedin"></i><span>LinkedIn Jobs</span></a>
+    </div>
 
-<!-- პრესა -->
-<div class="category">
-<h2>📰 პრესა</h2>
-<div class="links">
-<a class="site" href="https://ambebi.ge"><img src="https://ambebi.ge/favicon.ico">Ambebi</a>
-<a class="site" href="https://on.ge"><img src="https://on.ge/favicon.ico">On.ge</a>
-<a class="site" href="https://civil.ge"><img src="https://civil.ge/favicon.ico">Civil.ge</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-newspaper"></i> პრესა</div>
+    <div class="grid">
+        <a href="https://ambebi.ge" class="site-card"><i class="fas fa-newspaper"></i><span>Ambebi</span></a>
+        <a href="https://on.ge" class="site-card"><i class="fas fa-newspaper"></i><span>On.ge</span></a>
+        <a href="https://civil.ge" class="site-card"><i class="fas fa-newspaper"></i><span>Civil.ge</span></a>
+    </div>
 
-<!-- მაღაზიები -->
-<div class="category">
-<h2>🛒 მაღაზიები</h2>
-<div class="links">
-<a class="site" href="https://myshop.ge"><img src="https://myshop.ge/favicon.ico">MyShop</a>
-<a class="site" href="https://vendoo.ge"><img src="https://vendoo.ge/favicon.ico">Vendoo</a>
-<a class="site" href="https://amazon.com"><img src="https://amazon.com/favicon.ico">Amazon</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-store"></i> მაღაზიები</div>
+    <div class="grid">
+        <a href="https://myshop.ge" class="site-card"><i class="fas fa-store"></i><span>MyShop</span></a>
+        <a href="https://vendoo.ge" class="site-card"><i class="fas fa-store"></i><span>Vendoo</span></a>
+        <a href="https://amazon.com" class="site-card"><i class="fab fa-amazon"></i><span>Amazon</span></a>
+    </div>
 
-<!-- რემონტი -->
-<div class="category">
-<h2>🛠️ რემონტი</h2>
-<div class="links">
-<a class="site" href="https://ss.ge"><img src="https://ss.ge/favicon.ico">SS.ge</a>
-<a class="site" href="https://build.ge"><img src="https://build.ge/favicon.ico">Build.ge</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-tools"></i> რემონტი</div>
+    <div class="grid">
+        <a href="https://ss.ge" class="site-card"><i class="fas fa-tools"></i><span>SS.ge</span></a>
+        <a href="https://build.ge" class="site-card"><i class="fas fa-tools"></i><span>Build.ge</span></a>
+    </div>
 
-<!-- განათლება -->
-<div class="category">
-<h2>📚 განათლება</h2>
-<div class="links">
-<a class="site" href="https://freeuni.edu.ge"><img src="https://freeuni.edu.ge/favicon.ico">FreeUni</a>
-<a class="site" href="https://coursera.org"><img src="https://coursera.org/favicon.ico">Coursera</a>
-<a class="site" href="https://khanacademy.org"><img src="https://khanacademy.org/favicon.ico">Khan Academy</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-book"></i> განათლება</div>
+    <div class="grid">
+        <a href="https://freeuni.edu.ge" class="site-card"><i class="fas fa-book"></i><span>FreeUni</span></a>
+        <a href="https://coursera.org" class="site-card"><i class="fas fa-book"></i><span>Coursera</span></a>
+        <a href="https://khanacademy.org" class="site-card"><i class="fas fa-book"></i><span>Khan Academy</span></a>
+    </div>
 
-<!-- რესტორნები -->
-<div class="category">
-<h2>🍽️ რესტორნები</h2>
-<div class="links">
-<a class="site" href="https://wolt.com"><img src="https://wolt.com/favicon.ico">Wolt</a>
-<a class="site" href="https://glovoapp.com"><img src="https://glovoapp.com/favicon.ico">Glovo</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-utensils"></i> რესტორნები</div>
+    <div class="grid">
+        <a href="https://wolt.com" class="site-card"><i class="fas fa-utensils"></i><span>Wolt</span></a>
+        <a href="https://glovoapp.com" class="site-card"><i class="fas fa-utensils"></i><span>Glovo</span></a>
+    </div>
 
-<!-- მედიცინა -->
-<div class="category">
-<h2>🏥 მედიცინა</h2>
-<div class="links">
-<a class="site" href="https://aversi.ge"><img src="https://aversi.ge/favicon.ico">Aversi</a>
-<a class="site" href="https://evex.ge"><img src="https://evex.ge/favicon.ico">Evex</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-hospital"></i> მედიცინა</div>
+    <div class="grid">
+        <a href="https://aversi.ge" class="site-card"><i class="fas fa-hospital"></i><span>Aversi</span></a>
+        <a href="https://evex.ge" class="site-card"><i class="fas fa-hospital"></i><span>Evex</span></a>
+    </div>
 
-<!-- ტელევიზია -->
-<div class="category">
-<h2>📺 ტელევიზია</h2>
-<div class="links">
-<a class="site" href="https://1tv.ge"><img src="https://1tv.ge/favicon.ico">1TV</a>
-<a class="site" href="https://rustavi2.ge"><img src="https://rustavi2.ge/favicon.ico">Rustavi 2</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-tv"></i> ტელევიზია</div>
+    <div class="grid">
+        <a href="https://1tv.ge" class="site-card"><i class="fas fa-tv"></i><span>1TV</span></a>
+        <a href="https://rustavi2.ge" class="site-card"><i class="fas fa-tv"></i><span>Rustavi 2</span></a>
+    </div>
 
-<!-- ავტომობილი -->
-<div class="category">
-<h2>🚗 ავტომობილი</h2>
-<div class="links">
-<a class="site" href="https://myauto.ge"><img src="https://myauto.ge/favicon.ico">MyAuto</a>
-<a class="site" href="https://autopapa.ge"><img src="https://autopapa.ge/favicon.ico">AutoPapa</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-car"></i> ავტომობილი</div>
+    <div class="grid">
+        <a href="https://myauto.ge" class="site-card"><i class="fas fa-car"></i><span>MyAuto</span></a>
+        <a href="https://autopapa.ge" class="site-card"><i class="fas fa-car"></i><span>AutoPapa</span></a>
+    </div>
 
-<!-- სპორტი -->
-<div class="category">
-<h2>⚽ სპორტი</h2>
-<div class="links">
-<a class="site" href="https://livescore.com"><img src="https://livescore.com/favicon.ico">LiveScore</a>
-<a class="site" href="https://sportall.ge"><img src="https://sportall.ge/favicon.ico">Sportall</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-basketball-ball"></i> სპორტი</div>
+    <div class="grid">
+        <a href="https://livescore.com" class="site-card"><i class="fas fa-basketball-ball"></i><span>LiveScore</span></a>
+        <a href="https://sportall.ge" class="site-card"><i class="fas fa-basketball-ball"></i><span>Sportall</span></a>
+    </div>
 
-<!-- ამანათები -->
-<div class="category">
-<h2>📦 ამანათები</h2>
-<div class="links">
-<a class="site" href="https://usa2georgia.com"><img src="https://usa2georgia.com/favicon.ico">USA2Georgia</a>
-<a class="site" href="https://inex.ge"><img src="https://inex.ge/favicon.ico">INEX</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-box"></i> ამანათები</div>
+    <div class="grid">
+        <a href="https://usa2georgia.com" class="site-card"><i class="fas fa-box"></i><span>USA2Georgia</span></a>
+        <a href="https://inex.ge" class="site-card"><i class="fas fa-box"></i><span>INEX</span></a>
+    </div>
 
-<!-- კულინარია -->
-<div class="category">
-<h2>🍲 კულინარია</h2>
-<div class="links">
-<a class="site" href="https://gemrielia.ge"><img src="https://gemrielia.ge/favicon.ico">Gemrielia</a>
-<a class="site" href="https://taste.com"><img src="https://taste.com/favicon.ico">Taste</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-pepper-hot"></i> კულინარია</div>
+    <div class="grid">
+        <a href="https://gemrielia.ge" class="site-card"><i class="fas fa-pepper-hot"></i><span>Gemrielia</span></a>
+        <a href="https://taste.com" class="site-card"><i class="fas fa-pepper-hot"></i><span>Taste</span></a>
+    </div>
 
-<!-- ქალებისთვის -->
-<div class="category">
-<h2>👩 ქალებისთვის</h2>
-<div class="links">
-<a class="site" href="https://pink.ge"><img src="https://pink.ge/favicon.ico">Pink.ge</a>
-<a class="site" href="https://elle.com"><img src="https://elle.com/favicon.ico">ELLE</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-female"></i> ქალებისთვის</div>
+    <div class="grid">
+        <a href="https://pink.ge" class="site-card"><i class="fas fa-female"></i><span>Pink.ge</span></a>
+        <a href="https://elle.com" class="site-card"><i class="fas fa-female"></i><span>ELLE</span></a>
+    </div>
 
-<!-- ფინანსები -->
-<div class="category">
-<h2>💰 ფინანსები</h2>
-<div class="links">
-<a class="site" href="https://nbg.gov.ge"><img src="https://nbg.gov.ge/favicon.ico">ეროვნული ბანკი</a>
-<a class="site" href="https://tbcbank.ge"><img src="https://tbcbank.ge/favicon.ico">TBC Bank</a>
-<a class="site" href="https://bog.ge"><img src="https://bog.ge/favicon.ico">Bank of Georgia</a>
-</div>
-</div>
+    <div class="section-header"><i class="fas fa-money-bill-wave"></i> ფინანსები</div>
+    <div class="grid">
+        <a href="https://nbg.gov.ge" class="site-card"><i class="fas fa-money-bill-wave"></i><span>ეროვნული ბანკი</span></a>
+        <a href="https://tbcbank.ge" class="site-card"><i class="fas fa-money-bill-wave"></i><span>TBC Bank</span></a>
+        <a href="https://bog.ge" class="site-card"><i class="fas fa-money-bill-wave"></i><span>Bank of Georgia</span></a>
+    </div>
 
 </div>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
