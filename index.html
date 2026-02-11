@@ -3,172 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>საიტების კატალოგი</title>
+    <title>თანამედროვე კატალოგი</title>
     <style>
+        :root {
+            --primary-green: #4CAF50;
+            --dark-green: #388E3C;
+            --bg-color: #f4f7f6;
+            --card-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
+            background-color: var(--bg-color);
+            color: #333;
         }
 
-        /* ზედა ნაწილი (Header) */
+        /* Header & Nav */
         header {
-            background-color: #fff;
-            padding: 10px 20px;
-            border-bottom: 2px solid #5d9e31;
+            background: white;
+            box-shadow: var(--card-shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .top-banner {
-            width: 100%;
-            height: 90px;
-            background-color: #ddd;
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            border: 1px dashed #999;
-        }
-
-        nav {
-            background-color: #5d9e31;
-            padding: 10px;
-            display: flex;
-            gap: 15px;
+            padding: 0 20px;
         }
 
         nav a {
-            color: white;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        /* მთავარი კონტეინერი */
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            background: white;
-            padding: 15px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        /* მწკრივის სტრუქტურა */
-        .category-row {
-            display: flex;
-            border-bottom: 1px solid #eee;
-            align-items: stretch;
-        }
-
-        /* მარცხენა კატეგორიის სვეტი */
-        .category-label {
-            width: 150px;
-            background-color: #72b043;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 13px;
-            text-align: center;
-            padding: 10px;
-            flex-shrink: 0;
-            margin: 2px 0;
-            border-radius: 4px 0 0 4px;
-        }
-
-        /* მარჯვენა იკონების სვეტი */
-        .icon-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 10px;
-            background: #fafafa;
-            flex-grow: 1;
-            margin: 2px 0;
-        }
-
-        /* იკონების სტილი */
-        .site-card {
-            width: 100px;
-            height: 40px;
-            background: white;
-            border: 1px solid #ccc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: #333;
-            font-size: 12px;
+            color: #555;
+            margin-left: 20px;
+            font-weight: 500;
             transition: 0.3s;
-            border-radius: 3px;
+        }
+
+        nav a:hover { color: var(--primary-green); }
+
+        /* Main Content */
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .category-section {
+            display: flex;
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s;
         }
 
-        .site-card:hover {
-            border-color: #5d9e31;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        .category-section:hover {
+            transform: translateY(-2px);
         }
 
-        .site-card img {
-            max-width: 100%;
-            max-height: 100%;
-        }
-
-        /* სარეკლამო ბლოკი */
-        .ads-section {
-            margin: 20px 0;
+        /* მარცხენა კატეგორია */
+        .category-sidebar {
+            width: 160px;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            padding: 20px;
             text-align: center;
+            flex-shrink: 0;
+        }
+
+        /* იკონების ბადე */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            width: 100%;
+        }
+
+        /* ინდივიდუალური იკონი */
+        .site-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #444;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            height: 70px;
+            transition: all 0.3s ease;
+            padding: 5px;
+        }
+
+        .site-link:hover {
+            border-color: var(--primary-green);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .site-link img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+
+        .site-link span {
+            font-size: 12px;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        /* რეკლამა ქვემოთ */
+        .bottom-ads {
+            margin-top: 40px;
+            padding: 30px;
+            background: #e0e0e0;
+            border-radius: 12px;
+            text-align: center;
+            color: #777;
+            border: 2px dashed #bbb;
+        }
+
+        @media (max-width: 768px) {
+            .category-section { flex-direction: column; }
+            .category-sidebar { width: 100%; padding: 10px; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="top-banner">აქ არის სარეკლამო ბანერი (728x90)</div>
-    <nav>
-        <a href="#">მთავარი</a>
-        <a href="#">კონტაქტი</a>
-        <a href="#">რეკლამა</a>
-        <a href="#">სიახლეები</a>
-    </nav>
+    <div class="nav-container">
+        <div style="font-size: 24px; font-weight: bold; color: var(--primary-green);">LOGO</div>
+        <nav>
+            <a href="#">მთავარი</a>
+            <a href="#">კატეგორიები</a>
+            <a href="#">კონტაქტი</a>
+        </nav>
+    </div>
 </header>
 
 <div class="container">
-    
-    <div class="category-row">
-        <div class="category-label">სოც. ქსელები</div>
-        <div class="icon-grid">
-            <a href="https://facebook.com" class="site-card">Facebook</a>
-            <a href="https://youtube.com" class="site-card">YouTube</a>
-            <a href="https://instagram.com" class="site-card">Instagram</a>
-            <a href="https://tiktok.com" class="site-card">TikTok</a>
-            <a href="#" class="site-card">MyVideo</a>
+
+    <div class="category-section">
+        <div class="category-sidebar">სოც. ქსელები</div>
+        <div class="links-grid">
+            <a href="https://facebook.com" class="site-link">
+                <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="">
+                <span>Facebook</span>
+            </a>
+            <a href="https://youtube.com" class="site-link">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="">
+                <span>YouTube</span>
+            </a>
+            <a href="#" class="site-link">
+                <span>Instagram</span>
+            </a>
         </div>
     </div>
 
-    <div class="category-row">
-        <div class="category-label">ფილმები</div>
-        <div class="icon-grid">
-            <a href="#" class="site-card">Adjaranet</a>
-            <a href="#" class="site-card">Cavea</a>
-            <a href="#" class="site-card">Imovies</a>
-            <a href="#" class="site-card">Netfix</a>
+    <div class="category-section">
+        <div class="category-sidebar">ფილმები</div>
+        <div class="links-grid">
+            <a href="#" class="site-link"><span>Adjaranet</span></a>
+            <a href="#" class="site-link"><span>Cavea</span></a>
+            <a href="#" class="site-link"><span>IMovies</span></a>
         </div>
     </div>
 
-    <div class="ads-section">
-        <div style="background:#eee; padding: 20px; border: 1px solid #ddd;">შუა სარეკლამო ბანერი</div>
-    </div>
-
-    <div class="category-row">
-        <div class="category-label">სიახლეები</div>
-        <div class="icon-grid">
-            <a href="#" class="site-card">IPN.ge</a>
-            <a href="#" class="site-card">On.ge</a>
-            <a href="#" class="site-card">Ambebi.ge</a>
-            <a href="#" class="site-card">Imedi</a>
-        </div>
+    <div class="bottom-ads">
+        <strong>სარეკლამო ადგილი (Banner Area)</strong><br>
+        აქ შეგიძლიათ განათავსოთ თქვენი ბანერები
     </div>
 
 </div>
