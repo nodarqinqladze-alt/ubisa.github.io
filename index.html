@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amindi Club - რეალური პროგნოზი</title>
+    <title>Amindi Club - ამინდის პროგნოზი</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --glass: rgba(0, 0, 0, 0.5);
+            --glass: rgba(0, 0, 0, 0.4);
             --border: rgba(255, 255, 255, 0.2);
         }
 
@@ -16,7 +16,7 @@
 
         body {
             transition: background 1s ease;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&w=1920&q=80');
+            background: url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=1920&q=80'); /* Sunny Default */
             background-size: cover;
             background-attachment: fixed;
             color: white;
@@ -26,15 +26,16 @@
             padding: 20px;
         }
 
+        /* Glassmorphism Card */
         .container {
             width: 100%;
             max-width: 900px;
             background: var(--glass);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(15px);
             border: 1px solid var(--border);
-            border-radius: 25px;
-            padding: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
 
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
@@ -49,12 +50,22 @@
             transition: 0.3s;
         }
 
+        .btn-select:hover { background: rgba(255,255,255,0.4); }
+
+        /* Current Weather Section */
         .main-info { text-align: center; margin-bottom: 40px; }
         .temp-row { display: flex; justify-content: center; align-items: center; gap: 20px; font-size: 80px; font-weight: bold; }
         
-        .weather-icon-anim { animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        /* Icon Animations */
+        .weather-icon-anim {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
 
+        /* 3-Column Stats */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -66,11 +77,13 @@
             padding: 20px 0;
         }
 
-        .chart-container { height: 250px; margin: 30px 0; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 10px; }
+        /* Chart Area */
+        .chart-container { height: 250px; margin: 30px 0; }
 
+        /* 7-Day Forecast */
         .forecast-7 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 10px;
             margin-top: 20px;
         }
@@ -79,183 +92,152 @@
             padding: 15px;
             border-radius: 15px;
             text-align: center;
-            border: 1px solid var(--border);
         }
 
+        /* Dropdown Modal */
         #city-modal {
             display: none;
             position: fixed;
             top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: rgba(20,20,20,0.95);
+            background: rgba(0,0,0,0.9);
             padding: 30px; border-radius: 20px; z-index: 100;
             width: 80%; max-width: 400px;
-            box-shadow: 0 0 50px rgba(0,0,0,1);
         }
-        .city-list li { list-style: none; padding: 15px; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s; }
-        .city-list li:hover { background: rgba(255,255,255,0.1); }
+        .city-list li { list-style: none; padding: 10px; border-bottom: 1px solid #444; cursor: pointer; }
         
-        @media (max-width: 600px) { .temp-row { font-size: 50px; } .stats-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) {
+            .temp-row { font-size: 50px; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
-<body>
+<body id="bg-body">
 
     <div class="container">
         <header>
             <h2>UBISA<span style="color: #ffcc00;">GE</span></h2>
-            <button class="btn-select" onclick="toggleModal()">ქალაქის შეცვლა</button>
+            <button class="btn-select" onclick="toggleModal()">აირჩიეთ ქალაქი</button>
         </header>
 
         <div class="main-info">
             <h1 id="city-name">თბილისი</h1>
             <div class="temp-row">
-                <span id="current-temp">--°</span>
+                <span id="current-temp">-1°</span>
                 <div class="weather-icon-anim" id="main-icon">
-                    <i data-lucide="cloud" size="80"></i>
+                    <i data-lucide="cloud-snow" size="80"></i>
                 </div>
             </div>
-            <p id="weather-desc">მონაცემები იტვირთება...</p>
+            <p id="weather-desc">თოვლი</p>
         </div>
 
         <div class="stats-grid">
-            <div><i data-lucide="wind"></i><p id="wind-speed">ქარი: -- მ/წ</p></div>
-            <div><i data-lucide="droplets"></i><p id="humidity">ტენიანობა: --%</p></div>
-            <div><i data-lucide="eye"></i><p id="visibility">ხილვადობა: -- კმ</p></div>
+            <div><i data-lucide="wind"></i><p>ქარი: 2 მ/წ</p></div>
+            <div><i data-lucide="droplets"></i><p>ტენიანობა: 94%</p></div>
+            <div><i data-lucide="gauge"></i><p>წნევა: 1021 hPa</p></div>
+            <div><i data-lucide="sunrise"></i><p>07:15</p></div>
+            <div><i data-lucide="sunset"></i><p>18:40</p></div>
+            <div><i data-lucide="thermometer"></i><p>-2° / 1°</p></div>
         </div>
 
-        <h3>24 საათიანი პროგნოზი</h3>
+        <h3>24 საათიანი გრაფიკი</h3>
         <div class="chart-container">
             <canvas id="weatherChart"></canvas>
         </div>
 
         <h3>7 დღიანი პროგნოზი</h3>
-        <div class="forecast-7" id="forecast-container"></div>
+        <div class="forecast-7" id="forecast-container">
+            </div>
     </div>
 
     <div id="city-modal">
-        <h3 style="margin-bottom: 15px;">აირჩიეთ ქალაქი</h3>
+        <h3>აირჩიეთ ადგილი</h3>
         <ul class="city-list">
-            <li onclick="fetchWeather(41.6941, 44.8337, 'თბილისი')">თბილისი</li>
-            <li onclick="fetchWeather(41.6423, 41.6339, 'ბათუმი')">ბათუმი</li>
-            <li onclick="fetchWeather(42.2679, 42.6946, 'ქუთაისი')">ქუთაისი</li>
-            <li onclick="fetchWeather(41.7463, 43.5297, 'ბაკურიანი')">ბაკურიანი</li>
-            <li onclick="fetchWeather(42.5088, 41.8389, 'ფოთი')">ფოთი</li>
+            <li onclick="updateWeather('Batumi', 'Rain')">ბათუმი (წვიმა)</li>
+            <li onclick="updateWeather('Tbilisi', 'Snow')">თბილისი (თოვლი)</li>
+            <li onclick="updateWeather('Kutaisi', 'Sun')">ქუთაისი (მზე)</li>
+            <li onclick="updateWeather('Bakuriani', 'Cloudy')">ბაკურიანი (ღრუბელი)</li>
         </ul>
-        <button class="btn-select" onclick="toggleModal()" style="margin-top: 20px; width: 100%;">დახურვა</button>
+        <button onclick="toggleModal()" style="margin-top: 20px;">დახურვა</button>
     </div>
 
     <script>
-lucide.createIcons();
+        // ინიციალიზაცია Lucide იკონებისთვის
+        lucide.createIcons();
 
-const cities = {
-    Tbilisi: { lat: 41.7151, lon: 44.8271, name: "თბილისი" },
-    Batumi: { lat: 41.6168, lon: 41.6367, name: "ბათუმი" },
-    Kutaisi: { lat: 42.2662, lon: 42.7180, name: "ქუთაისი" },
-    Bakuriani: { lat: 41.7497, lon: 43.5323, name: "ბაკურიანი" }
-};
-
-let chart;
-
-// რეალური ამინდის მიღება
-async function fetchWeather(cityKey) {
-
-    const city = cities[cityKey];
-    document.getElementById("city-name").innerText = city.name;
-
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,visibility,windspeed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto`;
-
-    const res = await fetch(url);
-    const data = await res.json();
-
-    const current = data.current_weather;
-    const hourly = data.hourly;
-    const daily = data.daily;
-
-    // ტემპერატურა
-    document.getElementById("current-temp").innerText = `${Math.round(current.temperature)}°`;
-
-    // ქარი
-    document.querySelector('[data-lucide="wind"]').parentElement.innerHTML =
-        `<i data-lucide="wind"></i><p>ქარი: ${Math.round(current.windspeed)} კმ/სთ</p>`;
-
-    // ტენიანობა
-    document.querySelector('[data-lucide="droplets"]').parentElement.innerHTML =
-        `<i data-lucide="droplets"></i><p>ტენიანობა: ${hourly.relativehumidity_2m[0]}%</p>`;
-
-    // ხილვადობა
-    document.querySelector('[data-lucide="gauge"]').parentElement.innerHTML =
-        `<i data-lucide="eye"></i><p>ხილვადობა: ${Math.round(hourly.visibility[0] / 1000)} კმ</p>`;
-
-    // მზის ამოსვლა / ჩასვლა
-    document.querySelector('[data-lucide="sunrise"]').parentElement.innerHTML =
-        `<i data-lucide="sunrise"></i><p>${daily.sunrise[0].split("T")[1]}</p>`;
-
-    document.querySelector('[data-lucide="sunset"]').parentElement.innerHTML =
-        `<i data-lucide="sunset"></i><p>${daily.sunset[0].split("T")[1]}</p>`;
-
-    // მინ / მაქს
-    document.querySelector('[data-lucide="thermometer"]').parentElement.innerHTML =
-        `<i data-lucide="thermometer"></i><p>${Math.round(daily.temperature_2m_min[0])}° / ${Math.round(daily.temperature_2m_max[0])}°</p>`;
-
-    // 24 საათიანი გრაფიკი
-    const next24 = hourly.temperature_2m.slice(0, 8);
-    const labels = hourly.time.slice(0, 8).map(t => t.split("T")[1]);
-
-    if (chart) chart.destroy();
-
-    const ctx = document.getElementById('weatherChart').getContext('2d');
-    chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: next24,
-                borderColor: 'white',
-                backgroundColor: 'rgba(255,255,255,0.2)',
-                fill: true,
-                tension: 0.4
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-                y: { ticks: { color: 'white' }, grid: { display: false } },
-                x: { ticks: { color: 'white' }, grid: { display: false } }
+        // გრაფიკის აწყობა
+        const ctx = document.getElementById('weatherChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['10:00', '13:00', '16:00', '19:00', '22:00', '01:00', '04:00', '07:00'],
+                datasets: [{
+                    label: 'ტემპერატურა',
+                    data: [-1, 0, 1, -1, -2, -3, -4, -2],
+                    borderColor: 'white',
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { 
+                    y: { grid: { display: false }, ticks: { color: 'white' } },
+                    x: { grid: { display: false }, ticks: { color: 'white' } }
+                }
             }
+        });
+
+        // ქალაქის შეცვლის ფუნქცია
+        function updateWeather(city, type) {
+            document.getElementById('city-name').innerText = city;
+            const bg = document.getElementById('bg-body');
+            const iconBox = document.getElementById('main-icon');
+            
+            let iconName = 'sun';
+            let bgUrl = '';
+
+            if(type === 'Rain') {
+                iconName = 'cloud-rain';
+                bgUrl = 'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=1920&q=80';
+            } else if(type === 'Snow') {
+                iconName = 'cloud-snow';
+                bgUrl = 'https://images.unsplash.com/photo-1478265409131-1f65c88f965c?auto=format&fit=crop&w=1920&q=80';
+            } else if(type === 'Sun') {
+                iconName = 'sun';
+                bgUrl = 'https://images.unsplash.com/photo-1504386106331-3e4e71712b38?auto=format&fit=crop&w=1920&q=80';
+            } else {
+                iconName = 'cloud';
+                bgUrl = 'https://images.unsplash.com/photo-1483977399921-6cf3496d4acc?auto=format&fit=crop&w=1920&q=80';
+            }
+
+            bg.style.backgroundImage = `url('${bgUrl}')`;
+            iconBox.innerHTML = `<i data-lucide="${iconName}" size="80"></i>`;
+            lucide.createIcons();
+            toggleModal();
         }
-    });
 
-    // 7 დღიანი პროგნოზი
-    const daysGeo = ['ორშ','სამ','ოთხ','ხუთ','პარ','შაბ','კვი'];
-    const forecastHTML = daily.temperature_2m_max.map((max, i) => `
-        <div class="day-card">
-            <p>${daysGeo[i]}</p>
-            <i data-lucide="cloud-sun"></i>
-            <p><strong>${Math.round(max)}°</strong></p>
-            <p style="font-size:12px;">${Math.round(daily.temperature_2m_min[i])}°</p>
-        </div>
-    `).join('');
+        function toggleModal() {
+            const m = document.getElementById('city-modal');
+            m.style.display = m.style.display === 'block' ? 'none' : 'block';
+        }
 
-    document.getElementById("forecast-container").innerHTML = forecastHTML;
+        // 7 დღიანი პროგნოზის გენერაცია
+        const days = ['ორშ', 'სამ', 'ოთხ', 'ხუთ', 'პარ', 'შაბ', 'კვი'];
+        const forecastHTML = days.map(day => `
+            <div class="day-card">
+                <p>${day}</p>
+                <i data-lucide="cloud-sun"></i>
+                <p><strong>2°</strong></p>
+                <p style="font-size: 12px;">-3°</p>
+            </div>
+        `).join('');
+        document.getElementById('forecast-container').innerHTML = forecastHTML;
+        lucide.createIcons();
 
-    lucide.createIcons();
-}
-
-// მოდალის ღილაკი
-function updateWeather(cityKey) {
-    fetchWeather(cityKey);
-    toggleModal();
-}
-
-function toggleModal() {
-    const m = document.getElementById('city-modal');
-    m.style.display = m.style.display === 'block' ? 'none' : 'block';
-}
-
-// საწყისი ჩატვირთვა
-fetchWeather("Tbilisi");
-</script>
-
+    </script>
 </body>
 </html>
+
