@@ -316,7 +316,12 @@
             let bgUrl = 'https://images.unsplash.com/photo-1504386106331-3e4e71712b38?auto=format&fit=crop&w=1920&q=80';
             let text = 'მოწმენდილი';
 
-            if (code >= 1 && code <= 3) { icon = 'cloud-sun'; text = 'ნაწილობრივ ღრუბლიანი'; bgUrl = 'https://images.unsplash.com/photo-1483977399921-6cf3496d4acc?auto=format&fit=crop&w=1920&q=80'; }
+            if (code >= 1 && code <= 3) { 
+                icon = 'cloud-sun'; 
+                text = 'ნაწილობრივ ღრუბლიანი'; 
+                // განახლებული ფონი ნაწილობრივ ღრუბლიანი ამინდისთვის
+                bgUrl = 'https://images.unsplash.com/photo-1595822245037-963dbe16e99a?auto=format&fit=crop&w=1920&q=80'; 
+            }
             else if (code >= 45 && code <= 48) { icon = 'cloud'; text = 'ნისლი'; bgUrl = 'https://images.unsplash.com/photo-1485236715598-c885e30328c1?auto=format&fit=crop&w=1920&q=80'; }
             else if (code >= 51 && code <= 67) { icon = 'cloud-rain'; text = 'წვიმა'; bgUrl = 'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=1920&q=80'; }
             else if (code >= 71 && code <= 77) { icon = 'cloud-snow'; text = 'თოვლი'; bgUrl = 'https://images.unsplash.com/photo-1478265409131-1f65c88f965c?auto=format&fit=crop&w=1920&q=80'; }
