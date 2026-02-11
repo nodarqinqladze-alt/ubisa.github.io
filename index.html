@@ -14,7 +14,6 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
-        /* ახალი სტილი მენიუსთვის */
         .top-navbar {
             width: 100%;
             background: rgba(18, 18, 18, 0.95);
@@ -39,12 +38,6 @@
 
         .top-navbar a:hover { color: #ffcc00; }
 
-        .temp-unit-select {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
         body {
             transition: background 1s ease;
             background: url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=1920&q=80');
@@ -53,8 +46,9 @@
             color: white;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            padding: 100px 20px 40px 20px; /* ზედა პედინგი გაზრდილია მენიუს გამო */
+            flex-direction: column; /* დაემატა სვეტური განლაგება */
+            align-items: center;
+            padding: 100px 20px 40px 20px;
         }
 
         .container {
@@ -66,6 +60,7 @@
             border-radius: 20px;
             padding: 25px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            margin-bottom: 30px; /* დაემატა დაშორება რეკლამებამდე */
         }
 
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
@@ -113,6 +108,40 @@
             border-radius: 15px;
             text-align: center;
         }
+
+        /* --- რეკლამების სტილი --- */
+        .ads-wrapper {
+            width: 100%;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .ad-slot {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: 0.3s;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .ad-slot:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #ffcc00;
+            color: #ffcc00;
+        }
+
+        .ad-slot i { margin-bottom: 10px; }
+        /* ----------------------- */
 
         #city-modal {
             display: none;
@@ -175,7 +204,6 @@
         
         @media (max-width: 600px) {
             .top-navbar { padding: 15px 20px; gap: 12px; justify-content: center; }
-            .top-navbar a { font-size: 13px; }
             .temp-row { font-size: 50px; }
             .stats-grid { grid-template-columns: 1fr; }
             .city-list { grid-template-columns: 1fr 1fr; }
@@ -230,6 +258,21 @@
         <div class="forecast-7" id="forecast-container"></div>
     </div>
 
+    <div class="ads-wrapper">
+        <a href="#" class="ad-slot">
+            <i data-lucide="image-plus"></i>
+            <span>თქვენი რეკლამა</span>
+        </a>
+        <a href="#" class="ad-slot">
+            <i data-lucide="megaphone"></i>
+            <span>განათავსეთ რეკლამა</span>
+        </a>
+        <a href="#" class="ad-slot">
+            <i data-lucide="layout"></i>
+            <span>სარეკლამო ადგილი</span>
+        </a>
+    </div>
+
     <div id="city-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -238,64 +281,14 @@
             </div>
             <div class="city-list-container">
                 <ul class="city-list">
-                    <li onclick="fetchWeather(42.10, 43.23, 'უბისა')" style="border-color: #ffcc00; font-weight: bold;">უბისა</li>
-                    <li onclick="fetchWeather(41.75, 42.85, 'აბასთუმანი')">აბასთუმანი</li>
-                    <li onclick="fetchWeather(41.67, 42.77, 'ადიგენი')">ადიგენი</li>
-                    <li onclick="fetchWeather(42.39, 41.56, 'ანაკლია')">ანაკლია</li>
-                    <li onclick="fetchWeather(41.40, 43.48, 'ახალქალაქი')">ახალქალაქი</li>
-                    <li onclick="fetchWeather(41.64, 42.98, 'ახალციხე')">ახალციხე</li>
-                    <li onclick="fetchWeather(41.64, 41.63, 'ბათუმი')">ბათუმი</li>
-                    <li onclick="fetchWeather(41.74, 43.53, 'ბაკურიანი')">ბაკურიანი</li>
-                    <li onclick="fetchWeather(41.45, 44.54, 'ბოლნისი')">ბოლნისი</li>
-                    <li onclick="fetchWeather(41.84, 43.38, 'ბორჯომი')">ბორჯომი</li>
-                    <li onclick="fetchWeather(41.56, 41.57, 'გონიო')">გონიო</li>
-                    <li onclick="fetchWeather(41.98, 44.11, 'გორი')">გორი</li>
-                    <li onclick="fetchWeather(42.47, 44.48, 'გუდაური')">გუდაური</li>
-                    <li onclick="fetchWeather(41.74, 45.80, 'გურჯაანი')">გურჯაანი</li>
-                    <li onclick="fetchWeather(42.11, 43.03, 'ზესტაფონი')">ზესტაფონი</li>
-                    <li onclick="fetchWeather(42.51, 41.87, 'ზუგდიდი')">ზუგდიდი</li>
+                    <li onclick="fetchWeather(42.10, 43.23, 'უბისა')">უბისა</li>
                     <li onclick="fetchWeather(41.69, 44.83, 'თბილისი')">თბილისი</li>
-                    <li onclick="fetchWeather(41.92, 45.47, 'თელავი')">თელავი</li>
-                    <li onclick="fetchWeather(42.10, 44.81, 'თიანეთი')">თიანეთი</li>
-                    <li onclick="fetchWeather(41.92, 44.42, 'კასპი')">კასპი</li>
-                    <li onclick="fetchWeather(41.82, 46.27, 'ლაგოდეხი')">ლაგოდეხი</li>
-                    <li onclick="fetchWeather(42.08, 42.04, 'ლანჩხუთი')">ლანჩხუთი</li>
-                    <li onclick="fetchWeather(41.69, 44.53, 'მანგლისი')">მანგლისი</li>
-                    <li onclick="fetchWeather(41.48, 44.81, 'მარნეული')">მარნეული</li>
-                    <li onclick="fetchWeather(42.41, 42.37, 'მარტვილი')">მარტვილი</li>
-                    <li onclick="fetchWeather(43.04, 42.72, 'მესტია')">მესტია</li>
-                    <li onclick="fetchWeather(41.84, 44.72, 'მცხეთა')">მცხეთა</li>
-                    <li onclick="fetchWeather(41.92, 42.00, 'ოზურგეთი')">ოზურგეთი</li>
-                    <li onclick="fetchWeather(42.37, 45.63, 'ომალო')">ომალო</li>
-                    <li onclick="fetchWeather(42.47, 43.44, 'ონი')">ონი</li>
-                    <li onclick="fetchWeather(41.54, 45.00, 'რუსთავი')">რუსთავი</li>
-                    <li onclick="fetchWeather(41.73, 45.33, 'საგარეჯო')">საგარეჯო</li>
-                    <li onclick="fetchWeather(42.16, 42.34, 'სამტრედია')">სამტრედია</li>
-                    <li onclick="fetchWeather(42.34, 43.41, 'საჩხერე')">საჩხერე</li>
-                    <li onclick="fetchWeather(42.30, 42.16, 'სენაკი')">სენაკი</li>
-                    <li onclick="fetchWeather(41.99, 44.85, 'სიონი')">სიონი</li>
-                    <li onclick="fetchWeather(41.62, 45.92, 'სიღნაღი')">სიღნაღი</li>
-                    <li onclick="fetchWeather(43.00, 41.02, 'სოხუმი')">სოხუმი</li>
-                    <li onclick="fetchWeather(42.66, 44.64, 'სტეფანწმინდა')">სტეფანწმინდა</li>
-                    <li onclick="fetchWeather(42.02, 43.55, 'სურამი')">სურამი</li>
-                    <li onclick="fetchWeather(41.99, 41.76, 'ურეკი')">ურეკი</li>
-                    <li onclick="fetchWeather(42.91, 43.01, 'უშგული')">უშგული</li>
-                    <li onclick="fetchWeather(42.14, 41.67, 'ფოთი')">ფოთი</li>
-                    <li onclick="fetchWeather(41.82, 41.77, 'ქობულეთი')">ქობულეთი</li>
+                    <li onclick="fetchWeather(41.64, 41.63, 'ბათუმი')">ბათუმი</li>
                     <li onclick="fetchWeather(42.26, 42.71, 'ქუთაისი')">ქუთაისი</li>
-                    <li onclick="fetchWeather(42.59, 45.16, 'შატილი')">შატილი</li>
-                    <li onclick="fetchWeather(41.92, 41.75, 'შეკვეთილი')">შეკვეთილი</li>
-                    <li onclick="fetchWeather(42.75, 43.68, 'შოვი')">შოვი</li>
-                    <li onclick="fetchWeather(42.01, 42.23, 'ჩოხატაური')">ჩოხატაური</li>
-                    <li onclick="fetchWeather(42.22, 43.97, 'ცხინვალი')">ცხინვალი</li>
-                    <li onclick="fetchWeather(41.90, 45.45, 'წინანადალი')">წინანადალი</li>
-                    <li onclick="fetchWeather(41.71, 44.75, 'წყნეთი')">წყნეთი</li>
-                    <li onclick="fetchWeather(42.29, 43.30, 'ჭიათურა')">ჭიათურა</li>
-                    <li onclick="fetchWeather(42.02, 43.20, 'ხარაგაული')">ხარაგაული</li>
-                    <li onclick="fetchWeather(42.00, 43.60, 'ხაშური')">ხაშური</li>
-                    <li onclick="fetchWeather(42.32, 41.90, 'ხობი')">ხობი</li>
-                    <li onclick="fetchWeather(42.32, 42.42, 'ხონი')">ხონი</li>
-                </ul>
+                    <li onclick="fetchWeather(41.54, 45.00, 'რუსთავი')">რუსთავი</li>
+                    <li onclick="fetchWeather(41.98, 44.11, 'გორი')">გორი</li>
+                    <li onclick="fetchWeather(42.51, 41.87, 'ზუგდიდი')">ზუგდიდი</li>
+                    </ul>
             </div>
         </div>
     </div>
@@ -360,11 +353,7 @@
             let bgUrl = 'https://images.unsplash.com/photo-1504386106331-3e4e71712b38?auto=format&fit=crop&w=1920&q=80';
             let text = 'მოწმენდილი';
 
-            if (code >= 1 && code <= 3) { 
-                icon = 'cloud-sun'; 
-                text = 'ნაწილობრივ ღრუბლიანი'; 
-                bgUrl = 'https://images.unsplash.com/photo-1595822245037-963dbe16e99a?auto=format&fit=crop&w=1920&q=80'; 
-            }
+            if (code >= 1 && code <= 3) { icon = 'cloud-sun'; text = 'ნაწილობრივ ღრუბლიანი'; bgUrl = 'https://images.unsplash.com/photo-1595822245037-963dbe16e99a?auto=format&fit=crop&w=1920&q=80'; }
             else if (code >= 45 && code <= 48) { icon = 'cloud'; text = 'ნისლი'; bgUrl = 'https://images.unsplash.com/photo-1485236715598-c885e30328c1?auto=format&fit=crop&w=1920&q=80'; }
             else if (code >= 51 && code <= 67) { icon = 'cloud-rain'; text = 'წვიმა'; bgUrl = 'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=1920&q=80'; }
             else if (code >= 71 && code <= 77) { icon = 'cloud-snow'; text = 'თოვლი'; bgUrl = 'https://images.unsplash.com/photo-1478265409131-1f65c88f965c?auto=format&fit=crop&w=1920&q=80'; }
@@ -387,9 +376,7 @@
         function updateChart(temps, times) {
             const labels = times.map(t => t.split('T')[1]);
             const ctx = document.getElementById('weatherChart').getContext('2d');
-            
             if (weatherChart) weatherChart.destroy();
-            
             weatherChart = new Chart(ctx, {
                 type: 'line',
                 data: {
