@@ -16,7 +16,7 @@
 
         body {
             transition: background 1s ease;
-            background: url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=1920&q=80'); /* Sunny Default */
+            background: url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-attachment: fixed;
             color: white;
@@ -26,7 +26,6 @@
             padding: 20px;
         }
 
-        /* Glassmorphism Card */
         .container {
             width: 100%;
             max-width: 900px;
@@ -52,20 +51,12 @@
 
         .btn-select:hover { background: rgba(255,255,255,0.4); }
 
-        /* Current Weather Section */
         .main-info { text-align: center; margin-bottom: 40px; }
         .temp-row { display: flex; justify-content: center; align-items: center; gap: 20px; font-size: 80px; font-weight: bold; }
         
-        /* Icon Animations */
-        .weather-icon-anim {
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        .weather-icon-anim { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        /* 3-Column Stats */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -77,10 +68,8 @@
             padding: 20px 0;
         }
 
-        /* Chart Area */
         .chart-container { height: 250px; margin: 30px 0; }
 
-        /* 7-Day Forecast */
         .forecast-7 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -94,7 +83,6 @@
             text-align: center;
         }
 
-        /* Dropdown Modal */
         #city-modal {
             display: none;
             position: fixed;
@@ -122,21 +110,21 @@
         <div class="main-info">
             <h1 id="city-name">თბილისი</h1>
             <div class="temp-row">
-                <span id="current-temp">-1°</span>
+                <span id="current-temp">--°</span>
                 <div class="weather-icon-anim" id="main-icon">
-                    <i data-lucide="cloud-snow" size="80"></i>
+                    <i data-lucide="cloud" size="80"></i>
                 </div>
             </div>
-            <p id="weather-desc">თოვლი</p>
+            <p id="weather-desc">იტვირთება...</p>
         </div>
 
-        <div class="stats-grid">
-            <div><i data-lucide="wind"></i><p>ქარი: 2 მ/წ</p></div>
-            <div><i data-lucide="droplets"></i><p>ტენიანობა: 94%</p></div>
-            <div><i data-lucide="gauge"></i><p>წნევა: 1021 hPa</p></div>
-            <div><i data-lucide="sunrise"></i><p>07:15</p></div>
-            <div><i data-lucide="sunset"></i><p>18:40</p></div>
-            <div><i data-lucide="thermometer"></i><p>-2° / 1°</p></div>
+        <div class="stats-grid" id="stats-grid">
+            <div><i data-lucide="wind"></i><p id="wind-speed">ქარი: -- მ/წ</p></div>
+            <div><i data-lucide="droplets"></i><p id="humidity">ტენიანობა: --%</p></div>
+            <div><i data-lucide="gauge"></i><p id="pressure">წნევა: -- hPa</p></div>
+            <div><i data-lucide="sunrise"></i><p id="sunrise">--:--</p></div>
+            <div><i data-lucide="sunset"></i><p id="sunset">--:--</p></div>
+            <div><i data-lucide="thermometer"></i><p id="temp-range">--° / --°</p></div>
         </div>
 
         <h3>24 საათიანი გრაფიკი</h3>
@@ -145,78 +133,133 @@
         </div>
 
         <h3>7 დღიანი პროგნოზი</h3>
-        <div class="forecast-7" id="forecast-container">
-            </div>
+        <div class="forecast-7" id="forecast-container"></div>
     </div>
 
     <div id="city-modal">
         <h3>აირჩიეთ ადგილი</h3>
         <ul class="city-list">
-            <li onclick="updateWeather('Batumi', 'Rain')">ბათუმი (წვიმა)</li>
-            <li onclick="updateWeather('Tbilisi', 'Snow')">თბილისი (თოვლი)</li>
-            <li onclick="updateWeather('Kutaisi', 'Sun')">ქუთაისი (მზე)</li>
-            <li onclick="updateWeather('Bakuriani', 'Cloudy')">ბაკურიანი (ღრუბელი)</li>
+            <li onclick="fetchWeather(41.64, 41.63, 'ბათუმი')">ბათუმი</li>
+            <li onclick="fetchWeather(41.69, 44.83, 'თბილისი')">თბილისი</li>
+            <li onclick="fetchWeather(42.26, 42.71, 'ქუთაისი')">ქუთაისი</li>
+            <li onclick="fetchWeather(41.74, 43.53, 'ბაკურიანი')">ბაკურიანი</li>
         </ul>
-        <button onclick="toggleModal()" style="margin-top: 20px;">დახურვა</button>
+        <button onclick="toggleModal()" style="margin-top: 20px; background: none; border: 1px solid white; color: white; padding: 5px 15px; border-radius: 10px; cursor: pointer;">დახურვა</button>
     </div>
 
     <script>
-        // ინიციალიზაცია Lucide იკონებისთვის
-        lucide.createIcons();
+        let weatherChart;
 
-        // გრაფიკის აწყობა
-        const ctx = document.getElementById('weatherChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['10:00', '13:00', '16:00', '19:00', '22:00', '01:00', '04:00', '07:00'],
-                datasets: [{
-                    label: 'ტემპერატურა',
-                    data: [-1, 0, 1, -1, -2, -3, -4, -2],
-                    borderColor: 'white',
-                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { 
-                    y: { grid: { display: false }, ticks: { color: 'white' } },
-                    x: { grid: { display: false }, ticks: { color: 'white' } }
-                }
+        async function fetchWeather(lat, lon, cityName) {
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,pressure_msl,wind_speed_10m&hourly=temperature_2m&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto`;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                updateUI(data, cityName);
+                if (document.getElementById('city-modal').style.display === 'block') toggleModal();
+            } catch (error) {
+                console.error("Error fetching weather:", error);
             }
-        });
+        }
 
-        // ქალაქის შეცვლის ფუნქცია
-        function updateWeather(city, type) {
-            document.getElementById('city-name').innerText = city;
+        function updateUI(data, cityName) {
+            const current = data.current;
+            const daily = data.daily;
+
+            // ძირითადი ინფორმაცია
+            document.getElementById('city-name').innerText = cityName;
+            document.getElementById('current-temp').innerText = Math.round(current.temperature_2m) + '°';
+            document.getElementById('wind-speed').innerText = `ქარი: ${current.wind_speed_10m} კმ/სთ`;
+            document.getElementById('humidity').innerText = `ტენიანობა: ${current.relative_humidity_2m}%`;
+            document.getElementById('pressure').innerText = `წნევა: ${Math.round(current.pressure_msl)} hPa`;
+            document.getElementById('sunrise').innerText = daily.sunrise[0].split('T')[1];
+            document.getElementById('sunset').innerText = daily.sunset[0].split('T')[1];
+            document.getElementById('temp-range').innerText = `${Math.round(daily.temperature_2m_min[0])}° / ${Math.round(daily.temperature_2m_max[0])}°`;
+
+            // ამინდის აღწერა და ფონი
+            updateWeatherStyle(current.weather_code, current.is_day);
+
+            // გრაფიკის განახლება
+            updateChart(data.hourly.temperature_2m.slice(0, 24), data.hourly.time.slice(0, 24));
+
+            // 7 დღიანი პროგნოზი
+            const forecastContainer = document.getElementById('forecast-container');
+            forecastContainer.innerHTML = '';
+            const days = ['კვი', 'ორშ', 'სამ', 'ოთხ', 'ხუთ', 'პარ', 'შაბ'];
+            
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(daily.time[i]);
+                const dayName = days[date.getDay()];
+                forecastContainer.innerHTML += `
+                    <div class="day-card">
+                        <p>${dayName}</p>
+                        <i data-lucide="${getIconName(daily.weather_code[i])}"></i>
+                        <p><strong>${Math.round(daily.temperature_2m_max[i])}°</strong></p>
+                        <p style="font-size: 12px;">${Math.round(daily.temperature_2m_min[i])}°</p>
+                    </div>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        function updateWeatherStyle(code, isDay) {
             const bg = document.getElementById('bg-body');
             const iconBox = document.getElementById('main-icon');
+            const desc = document.getElementById('weather-desc');
             
-            let iconName = 'sun';
-            let bgUrl = '';
+            let icon = 'sun';
+            let bgUrl = 'https://images.unsplash.com/photo-1504386106331-3e4e71712b38?auto=format&fit=crop&w=1920&q=80';
+            let text = 'მოწმენდილი';
 
-            if(type === 'Rain') {
-                iconName = 'cloud-rain';
-                bgUrl = 'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=1920&q=80';
-            } else if(type === 'Snow') {
-                iconName = 'cloud-snow';
-                bgUrl = 'https://images.unsplash.com/photo-1478265409131-1f65c88f965c?auto=format&fit=crop&w=1920&q=80';
-            } else if(type === 'Sun') {
-                iconName = 'sun';
-                bgUrl = 'https://images.unsplash.com/photo-1504386106331-3e4e71712b38?auto=format&fit=crop&w=1920&q=80';
-            } else {
-                iconName = 'cloud';
-                bgUrl = 'https://images.unsplash.com/photo-1483977399921-6cf3496d4acc?auto=format&fit=crop&w=1920&q=80';
-            }
+            if (code >= 1 && code <= 3) { icon = 'cloud-sun'; text = 'ნაწილობრივ ღრუბლიანი'; bgUrl = 'https://images.unsplash.com/photo-1483977399921-6cf3496d4acc?auto=format&fit=crop&w=1920&q=80'; }
+            else if (code >= 45 && code <= 48) { icon = 'cloud'; text = 'ნისლი'; bgUrl = 'https://images.unsplash.com/photo-1485236715598-c885e30328c1?auto=format&fit=crop&w=1920&q=80'; }
+            else if (code >= 51 && code <= 67) { icon = 'cloud-rain'; text = 'წვიმა'; bgUrl = 'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=1920&q=80'; }
+            else if (code >= 71 && code <= 77) { icon = 'cloud-snow'; text = 'თოვლი'; bgUrl = 'https://images.unsplash.com/photo-1478265409131-1f65c88f965c?auto=format&fit=crop&w=1920&q=80'; }
+            else if (code >= 80) { icon = 'cloud-lightning'; text = 'ჭექა-ქუხილი'; bgUrl = 'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&w=1920&q=80'; }
 
             bg.style.backgroundImage = `url('${bgUrl}')`;
-            iconBox.innerHTML = `<i data-lucide="${iconName}" size="80"></i>`;
+            desc.innerText = text;
+            iconBox.innerHTML = `<i data-lucide="${icon}" size="80"></i>`;
             lucide.createIcons();
-            toggleModal();
+        }
+
+        function getIconName(code) {
+            if (code === 0) return 'sun';
+            if (code <= 3) return 'cloud-sun';
+            if (code <= 67) return 'cloud-rain';
+            if (code <= 77) return 'cloud-snow';
+            return 'cloud-lightning';
+        }
+
+        function updateChart(temps, times) {
+            const labels = times.map(t => t.split('T')[1]);
+            const ctx = document.getElementById('weatherChart').getContext('2d');
+            
+            if (weatherChart) weatherChart.destroy();
+            
+            weatherChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels.filter((_, i) => i % 3 === 0),
+                    datasets: [{
+                        data: temps.filter((_, i) => i % 3 === 0),
+                        borderColor: 'white',
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { 
+                        y: { grid: { display: false }, ticks: { color: 'white' } },
+                        x: { grid: { display: false }, ticks: { color: 'white' } }
+                    }
+                }
+            });
         }
 
         function toggleModal() {
@@ -224,20 +267,8 @@
             m.style.display = m.style.display === 'block' ? 'none' : 'block';
         }
 
-        // 7 დღიანი პროგნოზის გენერაცია
-        const days = ['ორშ', 'სამ', 'ოთხ', 'ხუთ', 'პარ', 'შაბ', 'კვი'];
-        const forecastHTML = days.map(day => `
-            <div class="day-card">
-                <p>${day}</p>
-                <i data-lucide="cloud-sun"></i>
-                <p><strong>2°</strong></p>
-                <p style="font-size: 12px;">-3°</p>
-            </div>
-        `).join('');
-        document.getElementById('forecast-container').innerHTML = forecastHTML;
-        lucide.createIcons();
-
+        // საწყისი ჩატვირთვა - თბილისი
+        fetchWeather(41.69, 44.83, 'თბილისი');
     </script>
 </body>
 </html>
-
