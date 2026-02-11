@@ -1,368 +1,384 @@
 <!DOCTYPE html>
 <html lang="ka">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amindi Club - ამინდის პროგნოზი</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<style>
-:root {
-    --glass: rgba(0, 0, 0, 0.4);
-    --border: rgba(255, 255, 255, 0.2);
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amindi Club - ამინდის პროგნოზი</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --glass: rgba(0, 0, 0, 0.4);
+            --border: rgba(255, 255, 255, 0.2);
+        }
 
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
-body {
-    transition: background 1s ease;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    padding:20px;
-    overflow:hidden;
-    position:relative;
-    color:white;
-}
+        body {
+            transition: background 1s ease;
+            background: url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
 
-#sky {
-    position:absolute;
-    top:0; left:0;
-    width:100%; height:100%;
-    overflow:hidden;
-    z-index:-2;
-    background: linear-gradient(to top, #87ceeb, #cce7ff); /* default daytime sky */
-}
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
 
-.container {
-    width: 100%;
-    max-width: 900px;
-    background: var(--glass);
-    backdrop-filter: blur(15px);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:25px;
-    box-shadow:0 8px 32px rgba(0,0,0,0.3);
-    z-index:1;
-    position:relative;
-}
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
 
-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; }
+        .btn-select {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-.btn-select {
-    background: rgba(255,255,255,0.2);
-    border:1px solid white;
-    color:white;
-    padding:10px 20px;
-    border-radius:30px;
-    cursor:pointer;
-    transition:0.3s;
-}
-.btn-select:hover { background: rgba(255,255,255,0.4); }
+        .btn-select:hover { background: rgba(255,255,255,0.4); }
 
-.main-info { text-align:center; margin-bottom:40px; }
-.temp-row { display:flex; justify-content:center; align-items:center; gap:20px; font-size:80px; font-weight:bold; }
+        .main-info { text-align: center; margin-bottom: 40px; }
+        .temp-row { display: flex; justify-content: center; align-items: center; gap: 20px; font-size: 80px; font-weight: bold; }
+        
+        .weather-icon-anim { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-.weather-icon-anim { animation: float 3s ease-in-out infinite; }
-@keyframes float { 0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);} }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
 
-.stats-grid {
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-    margin:20px 0;
-    text-align:center;
-    border-top:1px solid var(--border);
-    border-bottom:1px solid var(--border);
-    padding:20px 0;
-}
+        .chart-container { height: 250px; margin: 30px 0; }
 
-.chart-container { height:250px; margin:30px 0; }
+        .forecast-7 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .day-card {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+        }
 
-.forecast-7 {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(100px,1fr));
-    gap:10px;
-    margin-top:20px;
-}
-.day-card {
-    background: rgba(255,255,255,0.1);
-    padding:15px;
-    border-radius:15px;
-    text-align:center;
-}
+        #city-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; 
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px;
+        }
 
-/* Modal */
-#city-modal {
-    display:none;
-    position:fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background:rgba(0,0,0,0.8);
-    backdrop-filter: blur(10px);
-    z-index:1000;
-    padding:20px;
-}
-.modal-content {
-    background: rgba(30,30,30,0.95);
-    max-width:800px;
-    margin:20px auto;
-    border-radius:20px;
-    padding:25px;
-    border:1px solid var(--border);
-    max-height:90vh;
-    display:flex;
-    flex-direction:column;
-}
-.modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:15px; }
-.city-list-container { overflow-y:auto; flex-grow:1; }
-.city-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; list-style:none; }
-.city-list li { padding:12px; background: rgba(255,255,255,0.05); border-radius:10px; cursor:pointer; text-align:center; transition:0.2s; border:1px solid transparent; }
-.city-list li:hover { background: rgba(255,255,255,0.15); border-color:#ffcc00; }
+        .modal-content {
+            background: rgba(30, 30, 30, 0.95);
+            max-width: 800px;
+            margin: 20px auto;
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-@media(max-width:600px){ .temp-row{font-size:50px;} .stats-grid{grid-template-columns:1fr;} .city-list{grid-template-columns:1fr 1fr;} }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
 
-/* 🌤 Sun rays */
-#sun-rays {
-    position:absolute;
-    top:50px;
-    left:50%;
-    transform:translateX(-50%);
-    width:200px; height:200px;
-    border-radius:50%;
-    background: radial-gradient(circle, rgba(255,255,200,0.4) 0%, rgba(255,255,200,0) 70%);
-    pointer-events:none;
-    z-index:-1;
-    animation: sun-pulse 3s ease-in-out infinite;
-}
-@keyframes sun-pulse { 0%,100%{transform:translateX(-50%) scale(1);} 50%{transform:translateX(-50%) scale(1.1);} }
+        .city-list-container {
+            overflow-y: auto;
+            flex-grow: 1;
+        }
 
-/* ☁️ Clouds */
-.cloud {
-    position:absolute;
-    background: rgba(255,255,255,0.8);
-    background: linear-gradient(top, #fff 0%, #ccc 100%);
-    border-radius:50%;
-    opacity:0.8;
-}
-.cloud::before, .cloud::after {
-    content:'';
-    position:absolute;
-    background: inherit;
-    width:50%; height:50%;
-    border-radius:50%;
-}
-@keyframes move-clouds {
-    0%{transform:translateX(-200px);}
-    100%{transform:translateX(120%);}
-}
+        .city-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            list-style: none;
+        }
 
-/* 🌧 Rain & ❄ Snow canvas */
-#weather-canvas {
-    position:absolute;
-    top:0; left:0;
-    width:100%; height:100%;
-    z-index:-1;
-    pointer-events:none;
-}
-</style>
+        .city-list li {
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .city-list li:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: #ffcc00;
+        }
+        
+        @media (max-width: 600px) {
+            .temp-row { font-size: 50px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .city-list { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
 </head>
-<body>
+<body id="bg-body">
 
-<div id="sky">
-    <div id="sun-rays"></div>
-    <canvas id="weather-canvas"></canvas>
-</div>
+    <div class="container">
+        <header>
+            <h2>UBISA<span style="color: #ffcc00;">GE</span></h2>
+            <button class="btn-select" onclick="toggleModal()">აირჩიეთ ქალაქი</button>
+        </header>
 
-<div class="container">
-    <header>
-        <h2>UBISA<span style="color: #ffcc00;">GE</span></h2>
-        <button class="btn-select" onclick="toggleModal()">აირჩიეთ ქალაქი</button>
-    </header>
-
-    <div class="main-info">
-        <h1 id="city-name">უბისა</h1>
-        <div class="temp-row">
-            <span id="current-temp">--°</span>
-            <div class="weather-icon-anim" id="main-icon"><i data-lucide="cloud" size="80"></i></div>
+        <div class="main-info">
+            <h1 id="city-name">უბისა</h1>
+            <div class="temp-row">
+                <span id="current-temp">--°</span>
+                <div class="weather-icon-anim" id="main-icon">
+                    <i data-lucide="cloud" size="80"></i>
+                </div>
+            </div>
+            <p id="weather-desc">იტვირთება...</p>
         </div>
-        <p id="weather-desc">იტვირთება...</p>
+
+        <div class="stats-grid" id="stats-grid">
+            <div><i data-lucide="wind"></i><p id="wind-speed">ქარი: -- მ/წ</p></div>
+            <div><i data-lucide="droplets"></i><p id="humidity">ტენიანობა: --%</p></div>
+            <div><i data-lucide="gauge"></i><p id="pressure">წნევა: -- hPa</p></div>
+            <div><i data-lucide="sunrise"></i><p id="sunrise">--:--</p></div>
+            <div><i data-lucide="sunset"></i><p id="sunset">--:--</p></div>
+            <div><i data-lucide="thermometer"></i><p id="temp-range">--° / --°</p></div>
+        </div>
+
+        <h3>24 საათიანი გრაფიკი</h3>
+        <div class="chart-container">
+            <canvas id="weatherChart"></canvas>
+        </div>
+
+        <h3>7 დღიანი პროგნოზი</h3>
+        <div class="forecast-7" id="forecast-container"></div>
     </div>
 
-    <div class="stats-grid" id="stats-grid">
-        <div><i data-lucide="wind"></i><p id="wind-speed">ქარი: -- კმ/სთ</p></div>
-        <div><i data-lucide="droplets"></i><p id="humidity">ტენიანობა: --%</p></div>
-        <div><i data-lucide="gauge"></i><p id="pressure">წნევა: -- hPa</p></div>
-        <div><i data-lucide="sunrise"></i><p id="sunrise">--:--</p></div>
-        <div><i data-lucide="sunset"></i><p id="sunset">--:--</p></div>
-        <div><i data-lucide="thermometer"></i><p id="temp-range">--° / --°</p></div>
+    <div id="city-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>აირჩიეთ ადგილი</h3>
+                <button onclick="toggleModal()" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer;">&times;</button>
+            </div>
+            <div class="city-list-container">
+                <ul class="city-list">
+                    <li onclick="fetchWeather(42.10, 43.23, 'უბისა')" style="border-color: #ffcc00; font-weight: bold;">უბისა</li>
+                    <li onclick="fetchWeather(41.75, 42.85, 'აბასთუმანი')">აბასთუმანი</li>
+                    <li onclick="fetchWeather(41.67, 42.77, 'ადიგენი')">ადიგენი</li>
+                    <li onclick="fetchWeather(42.39, 41.56, 'ანაკლია')">ანაკლია</li>
+                    <li onclick="fetchWeather(41.40, 43.48, 'ახალქალაქი')">ახალქალაქი</li>
+                    <li onclick="fetchWeather(41.64, 42.98, 'ახალციხე')">ახალციხე</li>
+                    <li onclick="fetchWeather(41.64, 41.63, 'ბათუმი')">ბათუმი</li>
+                    <li onclick="fetchWeather(41.74, 43.53, 'ბაკურიანი')">ბაკურიანი</li>
+                    <li onclick="fetchWeather(41.45, 44.54, 'ბოლნისი')">ბოლნისი</li>
+                    <li onclick="fetchWeather(41.84, 43.38, 'ბორჯომი')">ბორჯომი</li>
+                    <li onclick="fetchWeather(41.56, 41.57, 'გონიო')">გონიო</li>
+                    <li onclick="fetchWeather(41.98, 44.11, 'გორი')">გორი</li>
+                    <li onclick="fetchWeather(42.47, 44.48, 'გუდაური')">გუდაური</li>
+                    <li onclick="fetchWeather(41.74, 45.80, 'გურჯაანი')">გურჯაანი</li>
+                    <li onclick="fetchWeather(42.11, 43.03, 'ზესტაფონი')">ზესტაფონი</li>
+                    <li onclick="fetchWeather(42.51, 41.87, 'ზუგდიდი')">ზუგდიდი</li>
+                    <li onclick="fetchWeather(41.69, 44.83, 'თბილისი')">თბილისი</li>
+                    <li onclick="fetchWeather(41.92, 45.47, 'თელავი')">თელავი</li>
+                    <li onclick="fetchWeather(42.10, 44.81, 'თიანეთი')">თიანეთი</li>
+                    <li onclick="fetchWeather(41.92, 44.42, 'კასპი')">კასპი</li>
+                    <li onclick="fetchWeather(41.82, 46.27, 'ლაგოდეხი')">ლაგოდეხი</li>
+                    <li onclick="fetchWeather(42.08, 42.04, 'ლანჩხუთი')">ლანჩხუთი</li>
+                    <li onclick="fetchWeather(41.69, 44.53, 'მანგლისი')">მანგლისი</li>
+                    <li onclick="fetchWeather(41.48, 44.81, 'მარნეული')">მარნეული</li>
+                    <li onclick="fetchWeather(42.41, 42.37, 'მარტვილი')">მარტვილი</li>
+                    <li onclick="fetchWeather(43.04, 42.72, 'მესტია')">მესტია</li>
+                    <li onclick="fetchWeather(41.84, 44.72, 'მცხეთა')">მცხეთა</li>
+                    <li onclick="fetchWeather(41.92, 42.00, 'ოზურგეთი')">ოზურგეთი</li>
+                    <li onclick="fetchWeather(42.37, 45.63, 'ომალო')">ომალო</li>
+                    <li onclick="fetchWeather(42.47, 43.44, 'ონი')">ონი</li>
+                    <li onclick="fetchWeather(41.54, 45.00, 'რუსთავი')">რუსთავი</li>
+                    <li onclick="fetchWeather(41.73, 45.33, 'საგარეჯო')">საგარეჯო</li>
+                    <li onclick="fetchWeather(42.16, 42.34, 'სამტრედია')">სამტრედია</li>
+                    <li onclick="fetchWeather(42.34, 43.41, 'საჩხერე')">საჩხერე</li>
+                    <li onclick="fetchWeather(42.30, 42.16, 'სენაკი')">სენაკი</li>
+                    <li onclick="fetchWeather(41.99, 44.85, 'სიონი')">სიონი</li>
+                    <li onclick="fetchWeather(41.62, 45.92, 'სიღნაღი')">სიღნაღი</li>
+                    <li onclick="fetchWeather(43.00, 41.02, 'სოხუმი')">სოხუმი</li>
+                    <li onclick="fetchWeather(42.66, 44.64, 'სტეფანწმინდა')">სტეფანწმინდა</li>
+                    <li onclick="fetchWeather(42.02, 43.55, 'სურამი')">სურამი</li>
+                    <li onclick="fetchWeather(41.99, 41.76, 'ურეკი')">ურეკი</li>
+                    <li onclick="fetchWeather(42.91, 43.01, 'უშგული')">უშგული</li>
+                    <li onclick="fetchWeather(42.14, 41.67, 'ფოთი')">ფოთი</li>
+                    <li onclick="fetchWeather(41.82, 41.77, 'ქობულეთი')">ქობულეთი</li>
+                    <li onclick="fetchWeather(42.26, 42.71, 'ქუთაისი')">ქუთაისი</li>
+                    <li onclick="fetchWeather(42.59, 45.16, 'შატილი')">შატილი</li>
+                    <li onclick="fetchWeather(41.92, 41.75, 'შეკვეთილი')">შეკვეთილი</li>
+                    <li onclick="fetchWeather(42.75, 43.68, 'შოვი')">შოვი</li>
+                    <li onclick="fetchWeather(42.01, 42.23, 'ჩოხატაური')">ჩოხატაური</li>
+                    <li onclick="fetchWeather(42.22, 43.97, 'ცხინვალი')">ცხინვალი</li>
+                    <li onclick="fetchWeather(41.90, 45.45, 'წინანადალი')">წინანადალი</li>
+                    <li onclick="fetchWeather(41.71, 44.75, 'წყნეთი')">წყნეთი</li>
+                    <li onclick="fetchWeather(42.29, 43.30, 'ჭიათურა')">ჭიათურა</li>
+                    <li onclick="fetchWeather(42.02, 43.20, 'ხარაგაული')">ხარაგაული</li>
+                    <li onclick="fetchWeather(42.00, 43.60, 'ხაშური')">ხაშური</li>
+                    <li onclick="fetchWeather(42.32, 41.90, 'ხობი')">ხობი</li>
+                    <li onclick="fetchWeather(42.32, 42.42, 'ხონი')">ხონი</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
-    <h3>24 საათიანი გრაფიკი</h3>
-    <div class="chart-container"><canvas id="weatherChart"></canvas></div>
+    <script>
+        let weatherChart;
 
-    <h3>7 დღიანი პროგნოზი</h3>
-    <div class="forecast-7" id="forecast-container"></div>
-</div>
+        async function fetchWeather(lat, lon, cityName) {
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,pressure_msl,wind_speed_10m&hourly=temperature_2m&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto`;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                updateUI(data, cityName);
+                if (document.getElementById('city-modal').style.display === 'block') toggleModal();
+            } catch (error) {
+                console.error("Error fetching weather:", error);
+            }
+        }
 
-<div id="city-modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>აირჩიეთ ადგილი</h3>
-            <button onclick="toggleModal()" style="background:none;border:none;color:white;font-size:24px;cursor:pointer;">&times;</button>
-        </div>
-        <div class="city-list-container">
-            <ul class="city-list">
-                <li onclick="fetchWeather(42.10,43.23,'უბისა')">უბისა</li>
-                <li onclick="fetchWeather(41.69,44.83,'თბილისი')">თბილისი</li>
-            </ul>
-        </div>
-    </div>
-</div>
+        function updateUI(data, cityName) {
+            const current = data.current;
+            const daily = data.daily;
 
-<script>
-lucide.createIcons();
-let weatherChart;
+            document.getElementById('city-name').innerText = cityName;
+            document.getElementById('current-temp').innerText = Math.round(current.temperature_2m) + '°';
+            document.getElementById('wind-speed').innerText = `ქარი: ${current.wind_speed_10m} კმ/სთ`;
+            document.getElementById('humidity').innerText = `ტენიანობა: ${current.relative_humidity_2m}%`;
+            document.getElementById('pressure').innerText = `წნევა: ${Math.round(current.pressure_msl)} hPa`;
+            document.getElementById('sunrise').innerText = daily.sunrise[0].split('T')[1];
+            document.getElementById('sunset').innerText = daily.sunset[0].split('T')[1];
+            document.getElementById('temp-range').innerText = `${Math.round(daily.temperature_2m_min[0])}° / ${Math.round(daily.temperature_2m_max[0])}°`;
 
-const canvas = document.getElementById('weather-canvas');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+            updateWeatherStyle(current.weather_code, current.is_day);
+            updateChart(data.hourly.temperature_2m.slice(0, 24), data.hourly.time.slice(0, 24));
 
-let particles = [];
+            const forecastContainer = document.getElementById('forecast-container');
+            forecastContainer.innerHTML = '';
+            const days = ['კვი', 'ორშ', 'სამ', 'ოთხ', 'ხუთ', 'პარ', 'შაბ'];
+            
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(daily.time[i]);
+                const dayName = days[date.getDay()];
+                forecastContainer.innerHTML += `
+                    <div class="day-card">
+                        <p>${dayName}</p>
+                        <i data-lucide="${getIconName(daily.weather_code[i])}"></i>
+                        <p><strong>${Math.round(daily.temperature_2m_max[i])}°</strong></p>
+                        <p style="font-size: 12px;">${Math.round(daily.temperature_2m_min[i])}°</p>
+                    </div>
+                `;
+            }
+            lucide.createIcons();
+        }
 
-function initParticles(type){
-    particles=[];
-    for(let i=0;i<200;i++){
-        particles.push({
-            x: Math.random()*canvas.width,
-            y: Math.random()*canvas.height,
-            speed: Math.random()*2 +1,
-            type: type, // "rain" or "snow"
-            size: type==="snow"?Math.random()*3+2:1
-        });
-    }
-}
+        function updateWeatherStyle(code, isDay) {
+            const bg = document.getElementById('bg-body');
+            const iconBox = document.getElementById('main-icon');
+            const desc = document.getElementById('weather-desc');
+            
+            let icon = 'sun';
+            let bgUrl = 'https://images.unsplash.com/photo-1504386106331-3e4e71712b38?auto=format&fit=crop&w=1920&q=80';
+            let text = 'მოწმენდილი';
 
-function drawParticles(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach(p=>{
-        ctx.fillStyle=p.type==="rain"?"rgba(174,194,224,0.5)":"white";
-        if(p.type==="rain") ctx.fillRect(p.x,p.y,1,p.speed*5);
-        else ctx.beginPath(), ctx.arc(p.x,p.y,p.size,0,Math.PI*2), ctx.fill();
-        p.y+=p.speed;
-        if(p.y>canvas.height) p.y=0, p.x=Math.random()*canvas.width;
-    });
-    requestAnimationFrame(drawParticles);
-}
-drawParticles();
+            if (code >= 1 && code <= 3) { 
+                icon = 'cloud-sun'; 
+                text = 'ნაწილობრივ ღრუბლიანი'; 
+                // განახლებული ფონი ნაწილობრივ ღრუბლიანი ამინდისთვის
+                bgUrl = 'https://images.unsplash.com/photo-1595822245037-963dbe16e99a?auto=format&fit=crop&w=1920&q=80'; 
+            }
+            else if (code >= 45 && code <= 48) { icon = 'cloud'; text = 'ნისლი'; bgUrl = 'https://images.unsplash.com/photo-1485236715598-c885e30328c1?auto=format&fit=crop&w=1920&q=80'; }
+            else if (code >= 51 && code <= 67) { icon = 'cloud-rain'; text = 'წვიმა'; bgUrl = 'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=1920&q=80'; }
+            else if (code >= 71 && code <= 77) { icon = 'cloud-snow'; text = 'თოვლი'; bgUrl = 'https://images.unsplash.com/photo-1478265409131-1f65c88f965c?auto=format&fit=crop&w=1920&q=80'; }
+            else if (code >= 80) { icon = 'cloud-lightning'; text = 'ჭექა-ქუხილი'; bgUrl = 'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&w=1920&q=80'; }
 
-// Clouds animation
-function addClouds(num){
-    for(let i=0;i<num;i++){
-        const c = document.createElement('div');
-        c.className='cloud';
-        c.style.width=50+Math.random()*150+'px';
-        c.style.height=30+Math.random()*50+'px';
-        c.style.top=Math.random()*200+'px';
-        c.style.left=Math.random()*window.innerWidth+'px';
-        c.style.animation='move-clouds '+(50+Math.random()*50)+'s linear infinite';
-        document.getElementById('sky').appendChild(c);
-    }
-}
-addClouds(8);
+            bg.style.backgroundImage = `url('${bgUrl}')`;
+            desc.innerText = text;
+            iconBox.innerHTML = `<i data-lucide="${icon}" size="80"></i>`;
+            lucide.createIcons();
+        }
 
-// Weather fetching
-async function fetchWeather(lat, lon, cityName){
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,pressure_msl,wind_speed_10m&hourly=temperature_2m&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto`;
-    try{
-        const res = await fetch(url);
-        const data = await res.json();
-        updateUI(data,cityName);
-        if(document.getElementById('city-modal').style.display==='block') toggleModal();
-    }catch(e){console.error(e);}
-}
+        function getIconName(code) {
+            if (code === 0) return 'sun';
+            if (code <= 3) return 'cloud-sun';
+            if (code <= 67) return 'cloud-rain';
+            if (code <= 77) return 'cloud-snow';
+            return 'cloud-lightning';
+        }
 
-function updateUI(data,cityName){
-    const current = data.current;
-    const daily = data.daily;
-    document.getElementById('city-name').innerText=cityName;
-    document.getElementById('current-temp').innerText=Math.round(current.temperature_2m)+'°';
-    document.getElementById('wind-speed').innerText=`ქარი: ${current.wind_speed_10m} კმ/სთ`;
-    document.getElementById('humidity').innerText=`ტენიანობა: ${current.relative_humidity_2m}%`;
-    document.getElementById('pressure').innerText=`წნევა: ${Math.round(current.pressure_msl)} hPa`;
-    document.getElementById('sunrise').innerText=daily.sunrise[0].split('T')[1];
-    document.getElementById('sunset').innerText=daily.sunset[0].split('T')[1];
-    document.getElementById('temp-range').innerText=`${Math.round(daily.temperature_2m_min[0])}° / ${Math.round(daily.temperature_2m_max[0])}°`;
+        function updateChart(temps, times) {
+            const labels = times.map(t => t.split('T')[1]);
+            const ctx = document.getElementById('weatherChart').getContext('2d');
+            
+            if (weatherChart) weatherChart.destroy();
+            
+            weatherChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels.filter((_, i) => i % 3 === 0),
+                    datasets: [{
+                        data: temps.filter((_, i) => i % 3 === 0),
+                        borderColor: 'white',
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { 
+                        y: { grid: { display: false }, ticks: { color: 'white' } },
+                        x: { grid: { display: false }, ticks: { color: 'white' } }
+                    }
+                }
+            });
+        }
 
-    updateWeatherStyle(current.weather_code,current.is_day);
+        function toggleModal() {
+            const m = document.getElementById('city-modal');
+            m.style.display = m.style.display === 'block' ? 'none' : 'block';
+        }
 
-    updateChart(data.hourly.temperature_2m.slice(0,24),data.hourly.time.slice(0,24));
-
-    const forecastContainer = document.getElementById('forecast-container');
-    forecastContainer.innerHTML='';
-    const days=['კვი','ორშ','სამ','ოთხ','ხუთ','პარ','შაბ'];
-    for(let i=0;i<7;i++){
-        const date=new Date(daily.time[i]);
-        const dayName=days[date.getDay()];
-        forecastContainer.innerHTML+=`
-        <div class="day-card">
-            <p>${dayName}</p>
-            <i data-lucide="${getIconName(daily.weather_code[i])}"></i>
-            <p><strong>${Math.round(daily.temperature_2m_max[i])}°</strong></p>
-            <p style="font-size:12px;">${Math.round(daily.temperature_2m_min[i])}°</p>
-        </div>`;
-    }
-    lucide.createIcons();
-}
-
-function updateWeatherStyle(code,isDay){
-    const iconBox=document.getElementById('main-icon');
-    const desc=document.getElementById('weather-desc');
-    const sunRays=document.getElementById('sun-rays');
-
-    let icon='sun', text='მოწმენდილი', type='clear';
-
-    if(code===0){ icon='sun'; text='მოწმენდილი'; type='clear'; }
-    else if(code<=3){ icon='cloud-sun'; text='ნაწილობრივ ღრუბლიანი'; type='partly'; }
-    else if(code>=45&&code<=48){ icon='cloud'; text='ნისლი'; type='fog'; }
-    else if(code>=51&&code<=67){ icon='cloud-rain'; text='წვიმა'; type='rain'; }
-    else if(code>=71&&code<=77){ icon='cloud-snow'; text='თოვლი'; type='snow'; }
-    else if(code>=80){ icon='cloud-lightning'; text='ჭექა-ქუხილი'; type='storm'; }
-
-    desc.innerText=text;
-    iconBox.innerHTML=`<i data-lucide="${icon}" size="80"></i>`;
-    lucide.createIcons();
-
-    // Update canvas particles
-    initParticles(type);
-}
-function getIconName(code){
-    if(code===0)return 'sun';
-    if(code<=3)return 'cloud-sun';
-    if(code<=67)return 'cloud-rain';
-    if(code<=77)return 'cloud-snow';
-    return 'cloud-lightning';
-}
-
-function updateChart(temps,times){
-    const labels=times.map(t=>t.split('T')[1]);
-    const ctxC=document.getElementById('weatherChart').getContext('2d');
-    if(weatherChart) weatherChart.destroy();
-    weatherChart=new Chart(ctxC,{
-        type:'line',
-        data:{labels:labels.filter((_,i)=>i%3===0),datasets:[{data:temps.filter((_,i)=>i%3===0),borderColor:'white',backgroundColor:'rgba(255,255,255,0.2)',fill:true,tension:0.4}]},
-        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{grid:{display:false},ticks:{color:'white'}},x:{grid:{display:false},ticks:{color:'white'}}}}
-    });
-}
-
-function toggleModal(){ const m=document.getElementById('city-modal'); m.style.display=m.style.display==='block'?'none':'block'; }
-
-window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
-
-// საწყისი ჩატვირთვა
-fetchWeather(42.10,43.23,'უბისა');
-</script>
-
+        // საწყისი ჩატვირთვა - უბისა
+        fetchWeather(42.10, 43.23, 'უბისა');
+    </script>
 </body>
 </html>
+
