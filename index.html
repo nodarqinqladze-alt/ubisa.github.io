@@ -3,64 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>მნიშვნელოვანი ფაქტები</title>
+    <title>Amindi Club - ამინდის პროგნოზი</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        :root {
+            --glass: rgba(0, 0, 0, 0.4);
+            --border: rgba(255, 255, 255, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f3f4f6;
-            text-align: center;
-            padding: 50px;
-        }
-
-        h1 {
-            color: #2c3e50;
-        }
-
-        #fact {
-            font-size: 24px;
-            font-weight: bold;
-            color: #16a085;
-        }
-
-        .button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #3498db;
+            transition: background 1s ease;
+            background: url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=1920&q=80'); /* Sunny Default */
+            background-size: cover;
+            background-attachment: fixed;
             color: white;
-            border: none;
-            border-radius: 5px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Glassmorphism Card */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+
+        .btn-select {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-select:hover { background: rgba(255,255,255,0.4); }
+
+        /* Current Weather Section */
+        .main-info { text-align: center; margin-bottom: 40px; }
+        .temp-row { display: flex; justify-content: center; align-items: center; gap: 20px; font-size: 80px; font-weight: bold; }
+        
+        /* Icon Animations */
+        .weather-icon-anim {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* 3-Column Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        /* Chart Area */
+        .chart-container { height: 250px; margin: 30px 0; }
+
+        /* 7-Day Forecast */
+        .forecast-7 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
             margin-top: 20px;
         }
+        .day-card {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+        }
 
-        .button:hover {
-            background-color: #2980b9;
+        /* Dropdown Modal */
+        #city-modal {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.9);
+            padding: 30px; border-radius: 20px; z-index: 100;
+            width: 80%; max-width: 400px;
+        }
+        .city-list li { list-style: none; padding: 10px; border-bottom: 1px solid #444; cursor: pointer; }
+        
+        @media (max-width: 600px) {
+            .temp-row { font-size: 50px; }
+            .stats-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body>
-    <h1>დღის საინტერესო ფაქტი</h1>
-    <div id="fact"></div>
-    <button class="button" onclick="getFact()">ახალი ფაქტი</button>
+<body id="bg-body">
+
+    <div class="container">
+        <header>
+            <h2>Amindi<span style="color: #ffcc00;">Club</span></h2>
+            <button class="btn-select" onclick="toggleModal()">აირჩიეთ ქალაქი</button>
+        </header>
+
+        <div class="main-info">
+            <h1 id="city-name">თბილისი</h1>
+            <div class="temp-row">
+                <span id="current-temp">-1°</span>
+                <div class="weather-icon-anim" id="main-icon">
+                    <i data-lucide="cloud-snow" size="80"></i>
+                </div>
+            </div>
+            <p id="weather-desc">თოვლი</p>
+        </div>
+
+        <div class="stats-grid">
+            <div><i data-lucide="wind"></i><p>ქარი: 2 მ/წ</p></div>
+            <div><i data-lucide="droplets"></i><p>ტენიანობა: 94%</p></div>
+            <div><i data-lucide="gauge"></i><p>წნევა: 1021 hPa</p></div>
+            <div><i data-lucide="sunrise"></i><p>07:15</p></div>
+            <div><i data-lucide="sunset"></i><p>18:40</p></div>
+            <div><i data-lucide="thermometer"></i><p>-2° / 1°</p></div>
+        </div>
+
+        <h3>24 საათიანი გრაფიკი</h3>
+        <div class="chart-container">
+            <canvas id="weatherChart"></canvas>
+        </div>
+
+        <h3>7 დღიანი პროგნოზი</h3>
+        <div class="forecast-7" id="forecast-container">
+            </div>
+    </div>
+
+    <div id="city-modal">
+        <h3>აირჩიეთ ადგილი</h3>
+        <ul class="city-list">
+            <li onclick="updateWeather('Batumi', 'Rain')">ბათუმი (წვიმა)</li>
+            <li onclick="updateWeather('Tbilisi', 'Snow')">თბილისი (თოვლი)</li>
+            <li onclick="updateWeather('Kutaisi', 'Sun')">ქუთაისი (მზე)</li>
+            <li onclick="updateWeather('Bakuriani', 'Cloudy')">ბაკურიანი (ღრუბელი)</li>
+        </ul>
+        <button onclick="toggleModal()" style="margin-top: 20px;">დახურვა</button>
+    </div>
 
     <script>
-        const facts = [
-            "დედამიწაზე 8 მილიონზე მეტი სახეობა არსებობს.",
-            "ყოველ წელს, მსოფლიოში, დაახლოებით 8 მილიონი ტონა პლასტიკური ნარჩენი ხვდება ოკეანეში.",
-            "პირველი კომპიუტერი, რომელიც პროგრამირებადი იყო, დამზადდა 1940-იან წლებში.",
-            "ყველაზე სწრაფი სახე მსოფლიოში ჰოკის მტრედი (Falco peregrinus), რომელიც საათში 240 მილის სიჩქარით დაფრინავს.",
-            "ადამიანის ტვინი 100 ბილიონზე მეტი ნეირონისგან შედგება."
-        ];
+        // ინიციალიზაცია Lucide იკონებისთვის
+        lucide.createIcons();
 
-        function getFact() {
-            const today = new Date();
-            const dayOfYear = today.getDate();
-            const factIndex = dayOfYear % facts.length;
-            document.getElementById('fact').innerHTML = facts[factIndex];
+        // გრაფიკის აწყობა
+        const ctx = document.getElementById('weatherChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['10:00', '13:00', '16:00', '19:00', '22:00', '01:00', '04:00', '07:00'],
+                datasets: [{
+                    label: 'ტემპერატურა',
+                    data: [-1, 0, 1, -1, -2, -3, -4, -2],
+                    borderColor: 'white',
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { 
+                    y: { grid: { display: false }, ticks: { color: 'white' } },
+                    x: { grid: { display: false }, ticks: { color: 'white' } }
+                }
+            }
+        });
+
+        // ქალაქის შეცვლის ფუნქცია
+        function updateWeather(city, type) {
+            document.getElementById('city-name').innerText = city;
+            const bg = document.getElementById('bg-body');
+            const iconBox = document.getElementById('main-icon');
+            
+            let iconName = 'sun';
+            let bgUrl = '';
+
+            if(type === 'Rain') {
+                iconName = 'cloud-rain';
+                bgUrl = 'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=1920&q=80';
+            } else if(type === 'Snow') {
+                iconName = 'cloud-snow';
+                bgUrl = 'https://images.unsplash.com/photo-1478265409131-1f65c88f965c?auto=format&fit=crop&w=1920&q=80';
+            } else if(type === 'Sun') {
+                iconName = 'sun';
+                bgUrl = 'https://images.unsplash.com/photo-1504386106331-3e4e71712b38?auto=format&fit=crop&w=1920&q=80';
+            } else {
+                iconName = 'cloud';
+                bgUrl = 'https://images.unsplash.com/photo-1483977399921-6cf3496d4acc?auto=format&fit=crop&w=1920&q=80';
+            }
+
+            bg.style.backgroundImage = `url('${bgUrl}')`;
+            iconBox.innerHTML = `<i data-lucide="${iconName}" size="80"></i>`;
+            lucide.createIcons();
+            toggleModal();
         }
 
-        // Initial fact when page loads
-        getFact();
+        function toggleModal() {
+            const m = document.getElementById('city-modal');
+            m.style.display = m.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // 7 დღიანი პროგნოზის გენერაცია
+        const days = ['ორშ', 'სამ', 'ოთხ', 'ხუთ', 'პარ', 'შაბ', 'კვი'];
+        const forecastHTML = days.map(day => `
+            <div class="day-card">
+                <p>${day}</p>
+                <i data-lucide="cloud-sun"></i>
+                <p><strong>2°</strong></p>
+                <p style="font-size: 12px;">-3°</p>
+            </div>
+        `).join('');
+        document.getElementById('forecast-container').innerHTML = forecastHTML;
+        lucide.createIcons();
+
     </script>
 </body>
 </html>
