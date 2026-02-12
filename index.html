@@ -6,11 +6,10 @@
     <title>საიტების კატალოგი</title>
     <style>
         :root {
-            /* ძველი ფერების დაბრუნება */
-            --primary: #2e7d32; /* მწვანე */
+            --primary: #2e7d32;
             --primary-hover: #1b5e20;
-            --accent: #f1f8e9; /* ღია მწვანე ფონი სათაურებისთვის */
-            --bg: #ffffff; /* თეთრი ფონი */
+            --accent: #f1f8e9;
+            --bg: #ffffff;
             --white: #ffffff;
             --card-bg: #f8fafc;
             --text: #334155;
@@ -77,10 +76,10 @@
             letter-spacing: -1px;
         }
 
+        /* პირველი რეკლამის ზომის გასწორება რომ სრულად ჩანდეს */
         .top-ad-slot {
             width: 468px;
             height: 60px;
-            background: #f1f5f9;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -89,9 +88,9 @@
         }
 
         .top-ad-slot img {
-            width: 468px;
-            height: 60px;
-            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            object-fit: fill; /* შევცვალე fill-ზე რომ სრულად ჩაეტიოს წარწერა */
         }
 
         nav ul {
