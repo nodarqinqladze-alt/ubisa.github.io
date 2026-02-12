@@ -22,6 +22,29 @@
             color: var(--text);
         }
 
+        /* --- Banner Animations --- */
+        @keyframes bannerPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes bannerGlow {
+            0% { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+            50% { box-shadow: 0 0 15px rgba(76, 175, 80, 0.4); }
+            100% { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        }
+
+        .animated-banner {
+            animation: bannerPulse 3s infinite ease-in-out, bannerGlow 3s infinite ease-in-out;
+            transition: transform 0.3s ease;
+        }
+
+        .animated-banner:hover {
+            animation-play-state: paused;
+            transform: scale(1.05) !important;
+        }
+
         /* --- ზედა მენიუ (Navbar) --- */
         header {
             background: var(--white);
@@ -239,7 +262,7 @@
         <a href="#" class="logo">UBISA.GE</a>
         
         <div class="top-ad-slot">
-            <a href="საიტის_ლინკი" target="_blank">
+            <a href="საიტის_ლინკი" target="_blank" class="animated-banner">
                 <img src="ბანერის_ლინკი" alt="რეკლამა">
             </a>
         </div>
@@ -260,289 +283,127 @@
         <div class="category-card">
             <div class="cat-title">სოციალური ქსელები</div>
             <div class="icons-flex">
-                <a href="https://facebook.com" class="icon-item">
-                    <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="FB">
-                    <span>Facebook</span>
-                </a>
-                <a href="https://x.com" class="icon-item">
-                    <img src="https://i.postimg.cc/F7KPqjH5/x.avif" alt="X">
-                    <span>X</span>
-                </a>
-                <a href="https://instagram.com" class="icon-item">
-                    <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="IG">
-                    <span>Instagram</span>
-                </a>
-                 <a href="https://tiktok.com" class="icon-item">
-                    <img src="https://i.postimg.cc/7b2d91hX/tik.jpg" alt="TikTok">
-                    <span>TikTok</span>
-                </a>
-                 <a href="https://www.linkedin.com/" class="icon-item">
-                    <img src="https://i.postimg.cc/GHQCPPgZ/link.webp" alt="Linkedin">
-                    <span>Linkedin</span>
-                </a>
-                 <a href="https://ok.ru" class="icon-item">
-                    <img src="https://i.postimg.cc/T1xZCymv/ok-ru.png" alt="Ok">
-                    <span>Ok</span>
-                </a>
+                <a href="https://facebook.com" class="icon-item"><img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="FB"><span>Facebook</span></a>
+                <a href="https://x.com" class="icon-item"><img src="https://i.postimg.cc/F7KPqjH5/x.avif" alt="X"><span>X</span></a>
+                <a href="https://instagram.com" class="icon-item"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="IG"><span>Instagram</span></a>
+                <a href="https://tiktok.com" class="icon-item"><img src="https://i.postimg.cc/7b2d91hX/tik.jpg" alt="TikTok"><span>TikTok</span></a>
+                <a href="https://www.linkedin.com/" class="icon-item"><img src="https://i.postimg.cc/GHQCPPgZ/link.webp" alt="Linkedin"><span>Linkedin</span></a>
+                <a href="https://ok.ru" class="icon-item"><img src="https://i.postimg.cc/T1xZCymv/ok-ru.png" alt="Ok"><span>Ok</span></a>
             </div>
         </div>
 
         <div class="category-card">
             <div class="cat-title">ფილმები</div>
             <div class="icons-flex">
-                <a href="https://youtube.com" class="icon-item">
-                    <img src="https://i.postimg.cc/8C9FJGvn/you.png" alt="Youtube">
-                    <span>Youtube</span>
-                </a>
-                <a href="https://geofilms.net" class="icon-item">
-                    <img src="https://i.postimg.cc/30B3wzyX/geofilms.jpg" alt="GeoFilms">
-                    <span>GeoFilms</span>
-                </a>
-                <a href="https://ufasofilmebi.ge" class="icon-item">
-                    <img src="https://i.postimg.cc/R6J3NC9n/ufasofilmebi.jpg" alt="Ufasofilmebi">
-                    <span>Ufasofilmebi</span>
-                </a>
-                 <a href="https://kinoworld.net/" class="icon-item">
-                    <img src="https://i.postimg.cc/GmstWNVx/kinooooo.png" alt="Kinoworld">
-                    <span>Kinoworld</span>
-                </a>
-                 <a href="https://croconet.cam/" class="icon-item">
-                    <img src="https://i.postimg.cc/fym0hR8r/coroco.jpg" alt="Croconet">
-                    <span>Croconet</span>
-                </a>
-                  <a href="https://cavea.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/1Rnznb5P/cavea.jpg" alt="Cavea">
-                    <span>Cavea</span>
-                </a>
+                <a href="https://youtube.com" class="icon-item"><img src="https://i.postimg.cc/8C9FJGvn/you.png" alt="Youtube"><span>Youtube</span></a>
+                <a href="https://geofilms.net" class="icon-item"><img src="https://i.postimg.cc/30B3wzyX/geofilms.jpg" alt="GeoFilms"><span>GeoFilms</span></a>
+                <a href="https://ufasofilmebi.ge" class="icon-item"><img src="https://i.postimg.cc/R6J3NC9n/ufasofilmebi.jpg" alt="Ufasofilmebi"><span>Ufasofilmebi</span></a>
+                <a href="https://kinoworld.net/" class="icon-item"><img src="https://i.postimg.cc/GmstWNVx/kinooooo.png" alt="Kinoworld"><span>Kinoworld</span></a>
+                <a href="https://croconet.cam/" class="icon-item"><img src="https://i.postimg.cc/fym0hR8r/coroco.jpg" alt="Croconet"><span>Croconet</span></a>
+                <a href="https://cavea.ge/" class="icon-item"><img src="https://i.postimg.cc/1Rnznb5P/cavea.jpg" alt="Cavea"><span>Cavea</span></a>
             </div>
         </div>
 
         <div class="category-card">
             <div class="cat-title">პრესა</div>
             <div class="icons-flex">
-                <a href="https://www.interpressnews.ge/ka/" class="icon-item">
-                    <img src="https://i.postimg.cc/WzgSB7Rv/ipn.jpg" alt="IPN">
-                    <span>IPN</span>
-                </a>
-                <a href="https://ambebi.ge" class="icon-item">
-                    <img src="https://i.postimg.cc/Y91m5SD7/ambebi.png" alt="Ambebi">
-                    <span>Ambebi</span>
-                </a>
-                <a href="https://imedinews.ge/ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/dtzwy9t2/imdei.png" alt="ImdeiNews">
-                    <span>ImdeiNews</span>
-                </a>
-                <a href="https://on.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/W15R76sY/on-ge.png" alt="On">
-                    <span>On</span>
-                </a>
-                 <a href="https://netgazeti.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/x85gS5xR/netgazeti.png" alt="Netgazeti">
-                    <span>Netgazeti</span>
-                </a>
-                 <a href="https://kvirispalitra.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/284L33C5/kvirispalitra.png" alt="Kvirispalitra">
-                    <span>Kvirispalitra</span>
-                </a>
+                <a href="https://www.interpressnews.ge/ka/" class="icon-item"><img src="https://i.postimg.cc/WzgSB7Rv/ipn.jpg" alt="IPN"><span>IPN</span></a>
+                <a href="https://ambebi.ge" class="icon-item"><img src="https://i.postimg.cc/Y91m5SD7/ambebi.png" alt="Ambebi"><span>Ambebi</span></a>
+                <a href="https://imedinews.ge/ge/" class="icon-item"><img src="https://i.postimg.cc/dtzwy9t2/imdei.png" alt="ImdeiNews"><span>ImdeiNews</span></a>
+                <a href="https://on.ge/" class="icon-item"><img src="https://i.postimg.cc/W15R76sY/on-ge.png" alt="On"><span>On</span></a>
+                <a href="https://netgazeti.ge/" class="icon-item"><img src="https://i.postimg.cc/x85gS5xR/netgazeti.png" alt="Netgazeti"><span>Netgazeti</span></a>
+                <a href="https://kvirispalitra.ge/" class="icon-item"><img src="https://i.postimg.cc/284L33C5/kvirispalitra.png" alt="Kvirispalitra"><span>Kvirispalitra</span></a>
             </div>
         </div>
 
         <div class="category-card">
             <div class="cat-title">სპორტი</div>
             <div class="icons-flex">
-                <a href="https://sportall.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/5tv85pVq/sporatal.png" alt="Sportal">
-                    <span>Sportal</span>
-                </a>
-                <a href="https://www.flashscore.com/" class="icon-item">
-                    <img src="https://i.postimg.cc/G3S92YWS/flashcore.png" alt="Flashscore">
-                    <span>Flashscore</span>
-                </a>
-                <a href="https://www.livescore.com/en/" class="icon-item">
-                    <img src="https://i.postimg.cc/y8Gw361d/livescore.png" alt="Livescore">
-                    <span>Livescore</span>
-                </a>
-                 <a href="https://sportline.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/HsR2Qryv/sportline.png" alt="Sportline">
-                    <span>Sportline</span>
-                </a>
-                 <a href="https://ge.betsson.sport/" class="icon-item">
-                    <img src="https://i.postimg.cc/Tw1L7987/betson.png" alt="Betsson">
-                    <span>Betsson</span>
-                </a>
-                  <a href="https://croco.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/SQz7my5P/croco.png" alt="Croco">
-                    <span>Croco</span>
-                </a>
+                <a href="https://sportall.ge/" class="icon-item"><img src="https://i.postimg.cc/5tv85pVq/sporatal.png" alt="Sportal"><span>Sportal</span></a>
+                <a href="https://www.flashscore.com/" class="icon-item"><img src="https://i.postimg.cc/G3S92YWS/flashcore.png" alt="Flashscore"><span>Flashscore</span></a>
+                <a href="https://www.livescore.com/en/" class="icon-item"><img src="https://i.postimg.cc/y8Gw361d/livescore.png" alt="Livescore"><span>Livescore</span></a>
+                <a href="https://sportline.ge/" class="icon-item"><img src="https://i.postimg.cc/HsR2Qryv/sportline.png" alt="Sportline"><span>Sportline</span></a>
+                <a href="https://ge.betsson.sport/" class="icon-item"><img src="https://i.postimg.cc/Tw1L7987/betson.png" alt="Betsson"><span>Betsson</span></a>
+                <a href="https://croco.ge/" class="icon-item"><img src="https://i.postimg.cc/SQz7my5P/croco.png" alt="Croco"><span>Croco</span></a>
             </div>
         </div>
 
         <div class="category-card">
             <div class="cat-title">მუსიკა</div>
             <div class="icons-flex">
-                <a href="https://www.music.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/x8T2ysWC/music.png" alt="Music">
-                    <span>Music</span>
-                </a>
-                <a href="https://akordebi.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/zGPFJVJM/akordebi.png" alt="Akordebi">
-                    <span>Akordebi</span>
-                </a>
-                <a href="https://vinyl.ge/shop/" class="icon-item">
-                    <img src="https://i.postimg.cc/rm9dwP1k/vinil.jpg" alt="Vinyl">
-                    <span>Vinyl</span>
-                </a>
-                 <a href="https://ytmp3.ai/" class="icon-item">
-                    <img src="https://i.postimg.cc/Yq04t8hh/gadmowera.png" alt="Ytmp3">
-                    <span>Ytmp3</span>
-                </a>
-                 <a href="https://www.shazam.com/" class="icon-item">
-                    <img src="https://i.postimg.cc/dt2SX56d/shazam.png" alt="Shazam">
-                    <span>Shazam</span>
-                </a>
-                  <a href="https://www.fortunesdemer.fr/" class="icon-item">
-                    <img src="https://i.postimg.cc/BQpBHkNh/mp3.png" alt="Fortunesdemer">
-                    <span>Fortunesdemer</span>
-                </a>
+                <a href="https://www.music.ge/" class="icon-item"><img src="https://i.postimg.cc/x8T2ysWC/music.png" alt="Music"><span>Music</span></a>
+                <a href="https://akordebi.ge/" class="icon-item"><img src="https://i.postimg.cc/zGPFJVJM/akordebi.png" alt="Akordebi"><span>Akordebi</span></a>
+                <a href="https://vinyl.ge/shop/" class="icon-item"><img src="https://i.postimg.cc/rm9dwP1k/vinil.jpg" alt="Vinyl"><span>Vinyl</span></a>
+                <a href="https://ytmp3.ai/" class="icon-item"><img src="https://i.postimg.cc/Yq04t8hh/gadmowera.png" alt="Ytmp3"><span>Ytmp3</span></a>
+                <a href="https://www.shazam.com/" class="icon-item"><img src="https://i.postimg.cc/dt2SX56d/shazam.png" alt="Shazam"><span>Shazam</span></a>
+                <a href="https://www.fortunesdemer.fr/" class="icon-item"><img src="https://i.postimg.cc/BQpBHkNh/mp3.png" alt="Fortunesdemer"><span>Fortunesdemer</span></a>
             </div>
         </div>
 
         <div class="category-card">
             <div class="cat-title">დასაქმება</div>
             <div class="icons-flex">
-                <a href="https://www.myjobs.ge/ka" class="icon-item">
-                    <img src="https://i.postimg.cc/J04GL6J1/jobs.png" alt="Myjobs">
-                    <span>Myjobsc</span>
-                </a>
-                <a href="https://jobs.ss.ge/ka" class="icon-item">
-                    <img src="https://i.postimg.cc/pTkLqf7H/ss.png" alt="Jobs">
-                    <span>Jobs</span>
-                </a>
-                <a href="https://www.hr.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/SNHNTNZq/hr.png" alt="HR">
-                    <span>HR</span>
-                </a>
-                 <a href="https://www.jobs.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/nhvZ3Kj9/jobs2.png" alt="Jobs">
-                    <span>Jobs</span>
-                </a>
-                 <a href="https://sfero.ge/ka" class="icon-item">
-                    <img src="https://i.postimg.cc/j52pYy5v/sfero.png" alt="Sfero">
-                    <span>Sfero</span>
-                </a>
-                  <a href="https://vacancy.hr.gov.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/MKJzVrXk/dasaq.png" alt="Vacancy">
-                    <span>Vacancy</span>
-                </a>
+                <a href="https://www.myjobs.ge/ka" class="icon-item"><img src="https://i.postimg.cc/J04GL6J1/jobs.png" alt="Myjobs"><span>Myjobsc</span></a>
+                <a href="https://jobs.ss.ge/ka" class="icon-item"><img src="https://i.postimg.cc/pTkLqf7H/ss.png" alt="Jobs"><span>Jobs</span></a>
+                <a href="https://www.hr.ge/" class="icon-item"><img src="https://i.postimg.cc/SNHNTNZq/hr.png" alt="HR"><span>HR</span></a>
+                <a href="https://www.jobs.ge/" class="icon-item"><img src="https://i.postimg.cc/nhvZ3Kj9/jobs2.png" alt="Jobs"><span>Jobs</span></a>
+                <a href="https://sfero.ge/ka" class="icon-item"><img src="https://i.postimg.cc/j52pYy5v/sfero.png" alt="Sfero"><span>Sfero</span></a>
+                <a href="https://vacancy.hr.gov.ge/" class="icon-item"><img src="https://i.postimg.cc/MKJzVrXk/dasaq.png" alt="Vacancy"><span>Vacancy</span></a>
             </div>
         </div>
 
         <div class="category-card">
             <div class="cat-title">უძრავი ქონება</div>
             <div class="icons-flex">
-                <a href="https://www.myhome.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/nzK05zK7/myhome.png" alt="Myhome">
-                    <span>Myhome</span>
-                </a>
-                <a href="https://www.home.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/vTqLF64x/home.png" alt="Home">
-                    <span>Home</span>
-                </a>
-                <a href="https://place.ge/ge" class="icon-item">
-                    <img src="https://i.postimg.cc/kXLKQCKX/plase.png" alt="Place">
-                    <span>Place</span>
-                </a>
-                 <a href="https://www.myclient.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/wBgt2jBZ/client.png" alt="Myclient">
-                    <span>Myclient</span>
-                </a>
-                 <a href="https://korter.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/QtVQ3JTS/korter.png" alt="Korter">
-                    <span>Korter</span>
-                </a>
-                  <a href="https://livo.ge//" class="icon-item">
-                    <img src="https://i.postimg.cc/vmZ9rt3s/livo.png" alt="Livo">
-                    <span>Livo</span>
-                </a>
+                <a href="https://www.myhome.ge/" class="icon-item"><img src="https://i.postimg.cc/nzK05zK7/myhome.png" alt="Myhome"><span>Myhome</span></a>
+                <a href="https://www.home.ge/" class="icon-item"><img src="https://i.postimg.cc/vTqLF64x/home.png" alt="Home"><span>Home</span></a>
+                <a href="https://place.ge/ge" class="icon-item"><img src="https://i.postimg.cc/kXLKQCKX/plase.png" alt="Place"><span>Place</span></a>
+                <a href="https://www.myclient.ge/" class="icon-item"><img src="https://i.postimg.cc/wBgt2jBZ/client.png" alt="Myclient"><span>Myclient</span></a>
+                <a href="https://korter.ge/" class="icon-item"><img src="https://i.postimg.cc/QtVQ3JTS/korter.png" alt="Korter"><span>Korter</span></a>
+                <a href="https://livo.ge//" class="icon-item"><img src="https://i.postimg.cc/vmZ9rt3s/livo.png" alt="Livo"><span>Livo</span></a>
             </div>
         </div>
 
         <div class="category-card">
             <div class="cat-title">AI საიტები</div>
             <div class="icons-flex">
-                <a href="https://chatgpt.com/" class="icon-item">
-                    <img src="https://i.postimg.cc/qqw4xy1P/chatgpt.png" alt="Chatgpt">
-                    <span>Chatgpt</span>
-                </a>
-                <a href="https://gemini.google.com/" class="icon-item">
-                    <img src="https://i.postimg.cc/LsPS0ryW/gemini.png" alt="Gemini">
-                    <span>Gemini</span>
-                </a>
-                <a href="https://leonardo.ai/" class="icon-item">
-                    <img src="https://i.postimg.cc/fWCNF7Kk/leonardo.png" alt="Leonardo">
-                    <span>Leonardo</span>
-                </a>
-                 <a href="https://grok.com/" class="icon-item">
-                    <img src="https://i.postimg.cc/BZMrNSSD/grok.png" alt="Grok">
-                    <span>Grok</span>
-                </a>
-                 <a href="https://klingai.com/global/" class="icon-item">
-                    <img src="https://i.postimg.cc/LXyxkszQ/kling.png" alt="Klingai">
-                    <span>Klingai</span>
-                </a>
-                  <a href="https://mylingo.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/HWVqZGVn/mylingo.png" alt="Mylingo">
-                    <span>Mylingo</span>
-                </a>
+                <a href="https://chatgpt.com/" class="icon-item"><img src="https://i.postimg.cc/qqw4xy1P/chatgpt.png" alt="Chatgpt"><span>Chatgpt</span></a>
+                <a href="https://gemini.google.com/" class="icon-item"><img src="https://i.postimg.cc/LsPS0ryW/gemini.png" alt="Gemini"><span>Gemini</span></a>
+                <a href="https://leonardo.ai/" class="icon-item"><img src="https://i.postimg.cc/fWCNF7Kk/leonardo.png" alt="Leonardo"><span>Leonardo</span></a>
+                <a href="https://grok.com/" class="icon-item"><img src="https://i.postimg.cc/BZMrNSSD/grok.png" alt="Grok"><span>Grok</span></a>
+                <a href="https://klingai.com/global/" class="icon-item"><img src="https://i.postimg.cc/LXyxkszQ/kling.png" alt="Klingai"><span>Klingai</span></a>
+                <a href="https://mylingo.ge/" class="icon-item"><img src="https://i.postimg.cc/HWVqZGVn/mylingo.png" alt="Mylingo"><span>Mylingo</span></a>
             </div>
         </div>
 
         <div class="category-card">
             <div class="cat-title">მაღაზიები</div>
             <div class="icons-flex">
-                <a href="https://extra.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/L52NM1mT/extra.png" alt="Extra">
-                    <span>Extra</span>
-                </a>
-                <a href="https://kontakt.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/fyRmKjw6/kontakt.png" alt="Kontakt">
-                    <span>Kontakt</span>
-                </a>
-                <a href="https://veli.store/" class="icon-item">
-                    <img src="https://i.postimg.cc/QxP1QTvn/veli.png" alt="Veli">
-                    <span>Veli</span>
-                </a>
-                 <a href="https://wishlist.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/RhhJfSdm/wishlist.png" alt="Wishlist">
-                    <span>Wishlist</span>
-                </a>
-                 <a href="https://www.mymarket.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/YCKj2f5H/mymarket.png" alt="Mymarket">
-                    <span>Mymarket</span>
-                </a>
-                  <a href="https://liloshop.ge/" class="icon-item">
-                    <img src="https://i.postimg.cc/sg4WtNv6/lilo.png" alt="Liloshop">
-                    <span>Liloshop</span>
-                </a>
+                <a href="https://extra.ge/" class="icon-item"><img src="https://i.postimg.cc/L52NM1mT/extra.png" alt="Extra"><span>Extra</span></a>
+                <a href="https://kontakt.ge/" class="icon-item"><img src="https://i.postimg.cc/fyRmKjw6/kontakt.png" alt="Kontakt"><span>Kontakt</span></a>
+                <a href="https://veli.store/" class="icon-item"><img src="https://i.postimg.cc/QxP1QTvn/veli.png" alt="Veli"><span>Veli</span></a>
+                <a href="https://wishlist.ge/" class="icon-item"><img src="https://i.postimg.cc/RhhJfSdm/wishlist.png" alt="Wishlist"><span>Wishlist</span></a>
+                <a href="https://www.mymarket.ge/" class="icon-item"><img src="https://i.postimg.cc/YCKj2f5H/mymarket.png" alt="Mymarket"><span>Mymarket</span></a>
+                <a href="https://liloshop.ge/" class="icon-item"><img src="https://i.postimg.cc/sg4WtNv6/lilo.png" alt="Liloshop"><span>Liloshop</span></a>
             </div>
         </div>
     </main>
 
     <aside class="sidebar-ads">
         <div class="ad-box">
-            <a href="საიტის_ლინკი" target="_blank">
+            <a href="საიტის_ლინკი" target="_blank" class="animated-banner">
                 <img src="ბანერის_ლინკი" alt="რეკლამა 300x250">
             </a>
         </div>
         <div class="ad-box" style="min-height: 400px;">
-            <a href="საიტის_ლინკი" target="_blank">
+            <a href="საიტის_ლინკი" target="_blank" class="animated-banner">
                 <img src="ბანერის_ლინკი" alt="ვერტიკალური რეკლამა">
             </a>
         </div>
     </aside>
 
     <footer class="footer-ad">
-        <a href="საიტის_ლინკი" target="_blank">
+        <a href="საიტის_ლინკი" target="_blank" class="animated-banner">
             <img src="ბანერის_ლინკი" alt="Footer Banner">
         </a>
     </footer>
