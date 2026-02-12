@@ -6,13 +6,15 @@
     <title>საიტების კატალოგი</title>
     <style>
         :root {
-            --primary: #4CAF50;
-            --primary-hover: #45a049;
-            --accent: #2e7d32;
-            --bg: #f0f2f5;
+            /* მწვანე ჩანაცვლდა ბანერის ფერებით: Cyan და Deep Blue */
+            --primary: #00e5ff; 
+            --primary-hover: #00b8d4;
+            --accent: #1a237e;
+            --bg: #0f172a; /* მუქი, თანამედროვე ფონი */
             --white: #ffffff;
-            --text: #333;
-            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --shadow: 0 4px 15px rgba(0, 229, 255, 0.2);
         }
 
         body {
@@ -25,34 +27,37 @@
         /* --- Banner Animations --- */
         @keyframes bannerPulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+            50% { transform: scale(1.01); }
             100% { transform: scale(1); }
         }
 
         @keyframes bannerGlow {
-            0% { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-            50% { box-shadow: 0 0 15px rgba(76, 175, 80, 0.4); }
-            100% { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+            0% { box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+            50% { box-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
+            100% { box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
         }
 
         .animated-banner {
+            display: block;
             animation: bannerPulse 3s infinite ease-in-out, bannerGlow 3s infinite ease-in-out;
             transition: transform 0.3s ease;
+            line-height: 0;
         }
 
         .animated-banner:hover {
             animation-play-state: paused;
-            transform: scale(1.05) !important;
+            transform: scale(1.03) !important;
         }
 
         /* --- ზედა მენიუ (Navbar) --- */
         header {
-            background: var(--white);
+            background: #1e293b;
             padding: 10px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.3);
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
         }
 
         .header-container {
@@ -70,23 +75,25 @@
             color: var(--primary);
             text-decoration: none;
             letter-spacing: -1px;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
         }
 
+        /* ბანერების ზომების გასწორება */
         .top-ad-slot {
             width: 468px;
             height: 60px;
-            background: #f9f9f9;
-            border: 1px dashed #ccc;
+            background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            border-radius: 4px;
         }
 
         .top-ad-slot img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 468px;
+            height: 60px;
+            object-fit: contain; /* ინარჩუნებს პროპორციას */
         }
 
         nav ul {
@@ -99,12 +106,14 @@
 
         nav a {
             text-decoration: none;
-            color: #555;
+            color: #cbd5e1;
             font-weight: 600;
             font-size: 15px;
             position: relative;
             padding-bottom: 5px;
         }
+
+        nav a:hover { color: var(--primary); }
 
         nav a::after {
             content: '';
@@ -117,21 +126,19 @@
             transition: width 0.3s;
         }
 
-        nav a:hover::after {
-            width: 100%;
-        }
+        nav a:hover::after { width: 100%; }
 
         .btn-contact {
             background: var(--primary);
-            color: white !important;
+            color: #0f172a !important;
             padding: 8px 20px;
             border-radius: 20px;
             transition: 0.3s;
         }
 
         .btn-contact:hover {
-            background: var(--accent);
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+            background: var(--white);
+            box-shadow: 0 0 15px var(--primary);
         }
 
         /* --- კონტენტი --- */
@@ -145,18 +152,19 @@
         }
 
         .category-card {
-            background: var(--white);
+            background: var(--card-bg);
             border-radius: 15px;
             display: flex;
             margin-bottom: 20px;
             overflow: hidden;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         .cat-title {
             width: 140px;
-            background: linear-gradient(180deg, var(--primary), var(--accent));
-            color: white;
+            background: linear-gradient(180deg, var(--accent), #000);
+            color: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -165,11 +173,12 @@
             font-weight: bold;
             font-size: 14px;
             text-transform: uppercase;
+            border-right: 1px solid rgba(0, 229, 255, 0.1);
         }
 
         .icons-flex {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
             gap: 15px;
             padding: 20px;
             flex-grow: 1;
@@ -181,30 +190,30 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            background: #fff;
-            border: 1px solid #f0f0f0;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 12px;
-            height: 85px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 90px;
+            transition: all 0.3s ease;
         }
 
         .icon-item:hover {
-            transform: translateY(-5px) scale(1.05);
+            transform: translateY(-5px);
             border-color: var(--primary);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            background: #f9fff9;
+            background: rgba(0, 229, 255, 0.05);
+            box-shadow: 0 5px 15px rgba(0, 229, 255, 0.1);
         }
 
         .icon-item img {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             object-fit: contain;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .icon-item span {
             font-size: 11px;
-            color: #666;
+            color: #94a3b8;
             font-weight: 600;
         }
 
@@ -216,15 +225,10 @@
         }
 
         .ad-box {
-            background: #fff;
+            background: #000;
             border-radius: 15px;
-            text-align: center;
-            box-shadow: var(--shadow);
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #eee;
+            border: 1px solid rgba(0, 229, 255, 0.2);
         }
 
         .ad-box img {
@@ -235,9 +239,7 @@
 
         .footer-ad {
             grid-column: 1 / -1;
-            background: #333;
-            color: white;
-            padding: 20px;
+            padding: 0;
             text-align: center;
             border-radius: 15px;
             margin-top: 20px;
@@ -245,13 +247,16 @@
         }
 
         .footer-ad img {
-            max-width: 100%;
-            height: auto;
+            width: 1000px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 15px;
         }
 
         @media (max-width: 900px) {
             .main-wrapper { grid-template-columns: 1fr; }
             .top-ad-slot { display: none; }
+            .footer-ad img { width: 100%; height: auto; }
         }
     </style>
 </head>
@@ -263,7 +268,7 @@
         
         <div class="top-ad-slot">
             <a href="/contact.html" target="_blank" class="animated-banner">
-                <img src="https://i.postimg.cc/nc44KzYc/reklama.jpg" alt="რეკლამა">
+                <img src="https://i.postimg.cc/nc44KzYc/reklama.jpg" alt="I Love Ubisa">
             </a>
         </div>
 
@@ -392,10 +397,10 @@
     <aside class="sidebar-ads">
         <div class="ad-box">
             <a href="https://gelink.ge" target="_blank" class="animated-banner">
-                <img src="https://i.postimg.cc/4dfbnThY/gelink.jpg" alt="">
+                <img src="https://i.postimg.cc/4dfbnThY/gelink.jpg" alt="Gelink 300x250">
             </a>
         </div>
-        <div class="ad-box" style="min-height: 400px;">
+        <div class="ad-box">
             <a href="/contact.html" target="_blank" class="animated-banner">
                 <img src="https://i.postimg.cc/QdZ6swSW/bann33.jpg" alt="ვერტიკალური რეკლამა">
             </a>
@@ -404,15 +409,10 @@
 
     <footer class="footer-ad">
         <a href="contact.html" target="_blank" class="animated-banner">
-            <img src="https://i.postimg.cc/ZRPN8spP/didi-baaa.png" alt="Footer Banner">
+            <img src="https://i.postimg.cc/ZRPN8spP/didi-baaa.png" alt="Footer Banner 1000x150">
         </a>
     </footer>
 </div>
 
 </body>
 </html>
-
-
-
-
-
