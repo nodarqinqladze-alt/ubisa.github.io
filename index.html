@@ -93,7 +93,7 @@
         .top-ad-slot img {
             width: 468px;
             height: 60px;
-            object-fit: contain; /* ინარჩუნებს პროპორციას */
+            object-fit: contain;
         }
 
         nav ul {
@@ -229,12 +229,14 @@
             border-radius: 15px;
             overflow: hidden;
             border: 1px solid rgba(0, 229, 255, 0.2);
+            line-height: 0; /* აშორებს ზედმეტ ადგილს სურათის ქვეშ */
         }
 
         .ad-box img {
             width: 100%;
-            height: auto;
+            height: 100%;
             display: block;
+            object-fit: cover; /* ავსებს მთელ სივრცეს გვერდების გარეშე */
         }
 
         .footer-ad {
@@ -248,7 +250,7 @@
 
         .footer-ad img {
             width: 1000px;
-            height: 150px;
+            height: 90px; /* სიმაღლე დაწვრილდა 150-დან 90-მდე უკეთესი ვიზუალისთვის */
             object-fit: cover;
             border-radius: 15px;
         }
@@ -409,7 +411,7 @@
 
     <footer class="footer-ad">
         <a href="contact.html" target="_blank" class="animated-banner">
-            <img src="https://i.postimg.cc/ZRPN8spP/didi-baaa.png" alt="Footer Banner 1000x150">
+            <img src="https://i.postimg.cc/ZRPN8spP/didi-baaa.png" alt="Footer Banner">
         </a>
     </footer>
 </div>
