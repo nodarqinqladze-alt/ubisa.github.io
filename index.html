@@ -13,7 +13,30 @@
             --accent: #ffcc00;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Segoe UI', sans-serif; 
+        }
+
+        /* ბლოკავს ტექსტის მონიშვნას */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            transition: background 1.2s ease-in-out;
+            background: #1a1a1a;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 100px 20px 40px 20px;
+        }
 
         .top-navbar {
             width: 100%;
@@ -50,19 +73,6 @@
             transform: translateY(-2px);
         }
 
-        body {
-            transition: background 1.2s ease-in-out;
-            background: #1a1a1a;
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            padding: 100px 20px 40px 20px;
-        }
-
         .container {
             width: 100%;
             max-width: 900px;
@@ -92,7 +102,7 @@
         .temp-row { display: flex; justify-content: center; align-items: center; gap: 20px; font-size: 80px; font-weight: bold; }
         
         .weather-icon-anim { animation: float 3s ease-in-out infinite; }
-        .weather-icon-anim img { width: 100px; height: 100px; object-fit: contain; }
+        .weather-icon-anim img { width: 100px; height: 100px; object-fit: contain; -webkit-user-drag: none; }
         
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
@@ -121,7 +131,7 @@
             border-radius: 15px;
             text-align: center;
         }
-        .day-card img { width: 45px; height: 45px; margin: 10px 0; }
+        .day-card img { width: 45px; height: 45px; margin: 10px 0; -webkit-user-drag: none; }
 
         #city-modal {
             display: none;
@@ -213,8 +223,7 @@
             <h1 id="city-name">უბისა</h1>
             <div class="temp-row">
                 <span id="current-temp">--°</span>
-                <div class="weather-icon-anim" id="main-icon">
-                    </div>
+                <div class="weather-icon-anim" id="main-icon"></div>
             </div>
             <p id="weather-desc">იტვირთება...</p>
         </div>
@@ -308,17 +317,38 @@
     </div>
 
     <script>
+        // --- დაცვის მექანიზმები ---
+        
+        // 1. მარჯვენა ღილაკის აკრძალვა
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 2. კლავიატურის კომბინაციების ბლოკირება
+        document.onkeydown = function(e) {
+            // F12
+            if(e.keyCode == 123) return false;
+            // Ctrl+U
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+            // Ctrl+Shift+I (Inspect)
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+            // Ctrl+Shift+J (Console)
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+            // Ctrl+Shift+C (Inspect Element)
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
+            // Ctrl+S (Save)
+            if(e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) return false;
+        };
+
+        // --- ამინდის ფუნქციონალი ---
+
         let weatherChart;
 
-        // --- იკონების მართვის ფუნქცია ---
-        // აქ შეცვალეთ .png ფაილების სახელები თქვენი ფაილების მიხედვით
         function getWeatherIcon(code) {
-            if (code === 0) return 'https://i.postimg.cc/C1nP1Hq4/mze.png'; // მზიანი
-            if (code <= 3) return 'https://i.postimg.cc/GhxMHpHv/grubliani.png'; // ღრუბლიანი
-            if (code <= 48) return 'https://i.postimg.cc/nhd0GwKL/nisli.png'; // ნისლი
-            if (code <= 67) return 'https://i.postimg.cc/ZnhcqkmH/wvimaaa.png'; // წვიმა
-            if (code <= 77) return 'https://i.postimg.cc/gkmsFPNy/tovli.png'; // თოვლი
-            return 'https://i.postimg.cc/TPLqq2YN/cheqa.png'; // ჭექა-ქუხილი
+            if (code === 0) return 'https://i.postimg.cc/C1nP1Hq4/mze.png';
+            if (code <= 3) return 'https://i.postimg.cc/GhxMHpHv/grubliani.png';
+            if (code <= 48) return 'https://i.postimg.cc/nhd0GwKL/nisli.png';
+            if (code <= 67) return 'https://i.postimg.cc/ZnhcqkmH/wvimaaa.png';
+            if (code <= 77) return 'https://i.postimg.cc/gkmsFPNy/tovli.png';
+            return 'https://i.postimg.cc/TPLqq2YN/cheqa.png';
         }
 
         async function fetchWeather(lat, lon, cityName) {
@@ -388,7 +418,6 @@
 
             bg.style.backgroundImage = `url('${bgUrl}')`;
             desc.innerText = text;
-            // აქ მთავარ იკონს ვსვამთ სურათის სახით
             iconBox.innerHTML = `<img src="${getWeatherIcon(code)}" alt="main weather">`;
         }
 
@@ -431,7 +460,3 @@
     </script>
 </body>
 </html>
-
-
-
-
