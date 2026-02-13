@@ -15,7 +15,6 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
-        /* განახლებული მენიუს სტილი */
         .top-navbar {
             width: 100%;
             background: rgba(18, 18, 18, 0.9);
@@ -93,6 +92,8 @@
         .temp-row { display: flex; justify-content: center; align-items: center; gap: 20px; font-size: 80px; font-weight: bold; }
         
         .weather-icon-anim { animation: float 3s ease-in-out infinite; }
+        .weather-icon-anim img { width: 100px; height: 100px; object-fit: contain; }
+        
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
         .stats-grid {
@@ -120,6 +121,7 @@
             border-radius: 15px;
             text-align: center;
         }
+        .day-card img { width: 45px; height: 45px; margin: 10px 0; }
 
         #city-modal {
             display: none;
@@ -212,8 +214,7 @@
             <div class="temp-row">
                 <span id="current-temp">--°</span>
                 <div class="weather-icon-anim" id="main-icon">
-                    <i data-lucide="cloud" size="80"></i>
-                </div>
+                    </div>
             </div>
             <p id="weather-desc">იტვირთება...</p>
         </div>
@@ -309,6 +310,17 @@
     <script>
         let weatherChart;
 
+        // --- იკონების მართვის ფუნქცია ---
+        // აქ შეცვალეთ .png ფაილების სახელები თქვენი ფაილების მიხედვით
+        function getWeatherIcon(code) {
+            if (code === 0) return 'sun.png'; // მზიანი
+            if (code <= 3) return 'cloudy.png'; // ღრუბლიანი
+            if (code <= 48) return 'fog.png'; // ნისლი
+            if (code <= 67) return 'rain.png'; // წვიმა
+            if (code <= 77) return 'snow.png'; // თოვლი
+            return 'thunder.png'; // ჭექა-ქუხილი
+        }
+
         async function fetchWeather(lat, lon, cityName) {
             const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,pressure_msl,wind_speed_10m&hourly=temperature_2m&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto`;
             
@@ -348,7 +360,7 @@
                 forecastContainer.innerHTML += `
                     <div class="day-card">
                         <p>${dayName}</p>
-                        <i data-lucide="${getIconName(daily.weather_code[i])}"></i>
+                        <img src="${getWeatherIcon(daily.weather_code[i])}" alt="weather">
                         <p><strong>${Math.round(daily.temperature_2m_max[i])}°</strong></p>
                         <p style="font-size: 12px;">${Math.round(daily.temperature_2m_min[i])}°</p>
                     </div>
@@ -362,32 +374,22 @@
             const iconBox = document.getElementById('main-icon');
             const desc = document.getElementById('weather-desc');
             
-            let icon = 'sun';
             let bgUrl = 'https://images.unsplash.com/photo-1504386106331-3e4e71712b38?auto=format&fit=crop&w=1920&q=80';
             let text = 'მოწმენდილი';
 
             if (code >= 1 && code <= 3) { 
-                icon = 'cloud-sun'; 
                 text = 'ნაწილობრივ ღრუბლიანი'; 
                 bgUrl = 'https://i.postimg.cc/T3bxWgv9/grubeliii.jpg'; 
             }
-            else if (code >= 45 && code <= 48) { icon = 'cloud'; text = 'ნისლი'; bgUrl = 'https://images.unsplash.com/photo-1485236715598-c885e30328c1?auto=format&fit=crop&w=1920&q=80'; }
-            else if (code >= 51 && code <= 67) { icon = 'cloud-rain'; text = 'წვიმა'; bgUrl = 'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=1920&q=80'; }
-            else if (code >= 71 && code <= 77) { icon = 'cloud-snow'; text = 'თოვლი'; bgUrl = 'https://images.unsplash.com/photo-1478265409131-1f65c88f965c?auto=format&fit=crop&w=1920&q=80'; }
-            else if (code >= 80) { icon = 'cloud-lightning'; text = 'ჭექა-ქუხილი'; bgUrl = 'https://i.postimg.cc/rsYT59pr/jeqa.jpg'; }
+            else if (code >= 45 && code <= 48) { text = 'ნისლი'; bgUrl = 'https://images.unsplash.com/photo-1485236715598-c885e30328c1?auto=format&fit=crop&w=1920&q=80'; }
+            else if (code >= 51 && code <= 67) { text = 'წვიმა'; bgUrl = 'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=1920&q=80'; }
+            else if (code >= 71 && code <= 77) { text = 'თოვლი'; bgUrl = 'https://images.unsplash.com/photo-1478265409131-1f65c88f965c?auto=format&fit=crop&w=1920&q=80'; }
+            else if (code >= 80) { text = 'ჭექა-ქუხილი'; bgUrl = 'https://i.postimg.cc/rsYT59pr/jeqa.jpg'; }
 
             bg.style.backgroundImage = `url('${bgUrl}')`;
             desc.innerText = text;
-            iconBox.innerHTML = `<i data-lucide="${icon}" size="80"></i>`;
-            lucide.createIcons();
-        }
-
-        function getIconName(code) {
-            if (code === 0) return 'sun';
-            if (code <= 3) return 'cloud-sun';
-            if (code <= 67) return 'cloud-rain';
-            if (code <= 77) return 'cloud-snow';
-            return 'cloud-lightning';
+            // აქ მთავარ იკონს ვსვამთ სურათის სახით
+            iconBox.innerHTML = `<img src="${getWeatherIcon(code)}" alt="main weather">`;
         }
 
         function updateChart(temps, times) {
@@ -429,10 +431,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
