@@ -313,11 +313,11 @@
         // --- იკონების მართვის ფუნქცია ---
         // აქ შეცვალეთ .png ფაილების სახელები თქვენი ფაილების მიხედვით
         function getWeatherIcon(code) {
-            if (code === 0) return 'sun.png'; // მზიანი
-            if (code <= 3) return 'cloudy.png'; // ღრუბლიანი
-            if (code <= 48) return 'fog.png'; // ნისლი
-            if (code <= 67) return 'rain.png'; // წვიმა
-            if (code <= 77) return 'snow.png'; // თოვლი
+            if (code === 0) return 'https://amindi.ge/static/img/weather_small_01.png'; // მზიანი
+            if (code <= 3) return 'https://amindi.ge/static/img/weather_small_05.png'; // ღრუბლიანი
+            if (code <= 48) return 'https://amindi.ge/static/img/weather_small_07.png'; // ნისლი
+            if (code <= 67) return 'https://amindi.ge/static/img/weather_small_12.png'; // წვიმა
+            if (code <= 77) return 'https://amindi.ge/static/img/weather_small_22.png'; // თოვლი
             return 'thunder.png'; // ჭექა-ქუხილი
         }
 
@@ -431,3 +431,4 @@
     </script>
 </body>
 </html>
+
